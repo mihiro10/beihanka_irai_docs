@@ -23,7 +23,7 @@ def convert_html_to_txt():
             html_path = f'tests_and_data/{c}'
             break
             
-    txt_path = 'tests_and_data/app_documentation.txt'
+    txt_path = 'automation_tools/app_documentation.txt'
     
     if html_path:
         print(f"Converting {html_path} to raw text...")
@@ -52,14 +52,14 @@ def extract_contexts_from_markdown(file_path):
 def parse_and_update():
     convert_html_to_txt()
     
-    doc_path = 'tests_and_data/app_documentation.txt'
+    doc_path = 'automation_tools/app_documentation.txt'
     if not os.path.exists(doc_path):
         print(f"Error: Neither Application Documentation.html nor app_documentation.txt found.")
         return
 
     existing_contexts = {}
-    existing_contexts.update(extract_contexts_from_markdown('docs/04_database_schema.md'))
-    existing_contexts.update(extract_contexts_from_markdown('docs/05_views_actions.md'))
+    existing_contexts.update(extract_contexts_from_markdown('appsheet_architecture/02_database_schema.md'))
+    existing_contexts.update(extract_contexts_from_markdown('appsheet_architecture/03_views_actions.md'))
 
     with codecs.open(doc_path, 'r', 'utf-8') as f:
         lines = f.readlines()
@@ -149,7 +149,7 @@ def parse_and_update():
     def get_ctx(item_name, default="-"):
         return existing_contexts.get(item_name, default)
 
-    md_db = '# 🗄 データベース・スキーマ定義 (Database Schema)\n\n※ `tests_and_data/app_documentation.txt` から自動生成・更新されます。\n\n'
+    md_db = '# 🗄 データベース・スキーマ定義 (Database Schema)\n\n※ `automation_tools/app_documentation.txt` から自動生成・更新されます。\n\n'
     for t in ['Requests', 'ChangeLogs', 'Products', 'RequestGroups', 'Users']:
         cols = tables[t]
         md_db += f'## 🗂 テーブル: `{t}` (全 {len(cols)} カラム)\n\n'
@@ -171,10 +171,10 @@ def parse_and_update():
         f = s['filter'].replace('|', '\\|') if s['filter'] else '-'
         md_db += f"| **{s['name']}** | {s['table']} | `{f}` | {get_ctx(s['name'])} |\n"
 
-    with codecs.open('docs/04_database_schema.md', 'w', 'utf-8') as f:
+    with codecs.open('appsheet_architecture/02_database_schema.md', 'w', 'utf-8') as f:
         f.write(md_db)
 
-    md_sva = '# 📱 Views & Actions (UI & Behavior Schema)\n\n※ `tests_and_data/app_documentation.txt` から自動生成・更新されます。\n\n'
+    md_sva = '# 📱 Views & Actions (UI & Behavior Schema)\n\n※ `automation_tools/app_documentation.txt` から自動生成・更新されます。\n\n'
     md_sva += '## 📱 Views (画面・UX)\n| ビュー名 | ビュータイプ | 表示条件 (Show If) | 備考 (Context / Business Logic) |\n| :--- | :--- | :--- | :--- |\n'
     for v in views:
         f = v['showif'].replace('|', '\\|') if v['showif'] else '-'
@@ -187,7 +187,7 @@ def parse_and_update():
         if c == '=': c = '-'
         md_sva += f"| **{a['name']}** | {a['table']} | {a['dothis']} | `{c}` | {get_ctx(a['name'])} |\n"
 
-    with codecs.open('docs/05_views_actions.md', 'w', 'utf-8') as f:
+    with codecs.open('appsheet_architecture/03_views_actions.md', 'w', 'utf-8') as f:
         f.write(md_sva)
 
     print(f"Update Complete! Slices: {len(slices)}, Views: {len(views)}, Actions: {len(actions)}")
