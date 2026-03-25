@@ -1,0 +1,8299 @@
+if (self.trustedTypes && self.trustedTypes.createPolicy && !self.trustedTypes.defaultPolicy) {
+      const escapeScriptPolicy = trustedTypes.createPolicy("default", {
+        createHTML: (string) => {
+          if (string === "&#8203;" || string === "" || string === "&") {
+            return string;
+          } else {
+            return null;
+          };
+        }
+      });
+    }
+Application Documentation
+section {
+      border-bottom: 1px solid #f5f5f5;
+      padding: 5px;
+    }
+
+    section:not(.hidden) { margin-top: 15px !important; }
+
+    tr:nth-child(even) { background-color: #eee; }
+
+    td {
+      overflow-wrap:anywhere
+    }
+
+    table {
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .fixedTable { table-layout: fixed; }
+
+    .subtitle { font-size: 24px; }
+
+    .outer {
+      width: 100%;
+      text-align: center;
+    }
+
+    .textCenter { text-align: center; }
+
+
+    @media print {
+      .hidePrint, header, footer { display: none !important; }
+
+      .pageBreak { page-break-before: always; }
+    }
+
+    .floatRight { float: right; }
+
+    button.sectionButton {
+      background-color: #217ecf;
+      color: #fff;
+      box-shadow: 0 0 0 1px #fff;
+      outline: none;
+    }
+
+    button.selected:hover { color: #fff; }
+
+    #displaySection > button { margin-bottom: 2px; }
+
+    #displaySection > button:focus { outline: none; }
+
+    #displaySection { text-align: center; }
+
+    .printButton { float: right; }
+
+    .smallText { font-size: 14px; }
+
+    .flexContainer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .flex1 { flex: 1; }
+
+    .flex3 { flex: 3; }
+
+    .alignStart { align-self: flex-start; }
+
+    a.sectionButton {
+      color: #00bbcb;
+      cursor: pointer;
+    }
+
+    .parentSection {
+      width: 95%;
+      margin-left: 5%;
+    }
+
+    .marginTop20 { margin-top: 20px; }
+
+    .marginBottom20 { margin-bottom: 20px; }
+/**
+    * This is used by this page and MarketingRedirect.cshtml - moved above ShouldLogAnalytics
+    * since this returns false for test accounts and we have an integration test
+    */
+  function getQueryStrings() {
+    var assoc = {};
+    var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+    var queryString = location.search.substring(1);
+    var keyValues = queryString.split('&');
+
+    for (var i in keyValues) {
+      var key = keyValues[i].split('=');
+      if (key.length > 1) {
+        assoc[decode(key[0])] = decode(key[1]);
+      }
+    }
+    return assoc;
+  }
+window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      function glueCookieNotificationBarLoaded() {
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});
+          var firstScript=d.getElementsByTagName(s)[0], dl=l!='dataLayer'?'&l='+l:'';
+          var script = d.createElement(s);
+          script.async = true;
+          var url = 'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+          if (self.trustedTypes && self.trustedTypes.createPolicy) {
+            var policy = self.trustedTypes.createPolicy('gtm-load-fix', {
+              createScriptURL: function(_ignored) {
+                return url;
+              }
+            });
+            script.src = policy.createScriptURL('_ignored');
+          } else {
+            script.src = url;
+          }
+          firstScript.parentNode.insertBefore(script, firstScript);
+        })(window,document,'script','dataLayer','GTM-MXWLX3PF');
+      }
+/**
+             * Checks whether all of the UTM fields are empty in local storage.
+             */
+            function hasNoSetUtmFields() {
+                return (
+                  window.localStorage.getItem('JeeneeNewUserCampaign') == null &&
+                  window.localStorage.getItem('JeeneeNewUserSource') == null &&
+                  window.localStorage.getItem('JeeneeNewUserMedium') == null &&
+                  window.localStorage.getItem('JeeneeNewUserContent') == null &&
+                  window.localStorage.getItem('JeeneeNewUserTerm') == null
+                );
+            }
+
+            /**
+             * Checks for UTM fields in URL params.
+             */
+            function hasUtmFieldsUrlparams(queryParams) {
+                return (
+                  queryParams.hasOwnProperty('utm_campaign') ||
+                  queryParams.hasOwnProperty('utm_source') ||
+                  queryParams.hasOwnProperty('utm_medium') ||
+                  queryParams.hasOwnProperty('utm_content') ||
+                  queryParams.hasOwnProperty('utm_term')
+                );
+            }
+
+            /**
+             * Sets UTM fields to direct/default values in local storage
+             * when none are passed in via the URL upon user's first visit.
+             * utm_content and utm_term are left undefined for direct and organic traffic.
+             */
+            function setDefaultUtmPropertiesOnUserLocalStorage() {
+                window.localStorage.setItem('JeeneeNewUserCampaign', 'direct');
+                window.localStorage.setItem('JeeneeNewUserSource', 'direct');
+                window.localStorage.setItem('JeeneeNewUserMedium', 'none');
+            }
+
+            /**
+             * Sets UTM values in local storage. Only process UTM parameters within the URL when
+             * all of UTM fields in local storage are undefined. This ensures first touch attribution.
+             * utm_campaign, utm_source, and utm_medium are required fields for every campaign, CTA, etc.
+             * Seeing any of these fields as undefined is an indication that there are invalid UTM parameters in the URL.
+             * utm_content and utm_term are optional.
+             */
+            function setUTMPropertiesOnUserLocalStorage() {
+                if (hasNoSetUtmFields()) {
+                    var queryParams = getQueryStrings();
+                    if (hasUtmFieldsUrlparams(queryParams)) {
+                        if (queryParams['utm_campaign'] != null) {
+                            window.localStorage.setItem('JeeneeNewUserCampaign', queryParams['utm_campaign']);
+                        }
+                        if (queryParams['utm_source'] != null) {
+                            window.localStorage.setItem('JeeneeNewUserSource', queryParams['utm_source']);
+                        }
+                        if (queryParams['utm_medium'] != null) {
+                            window.localStorage.setItem('JeeneeNewUserMedium', queryParams['utm_medium']);
+                        }
+                        if (queryParams['utm_content'] != null) {
+                            window.localStorage.setItem('JeeneeNewUserContent', queryParams['utm_content']);
+                        }
+                        if (queryParams['utm_term'] != null) {
+                            window.localStorage.setItem('JeeneeNewUserTerm', queryParams['utm_term']);
+                        }
+                    }
+                    else {
+                        setDefaultUtmPropertiesOnUserLocalStorage();
+                    }
+                }
+            }
+
+            function TrackSimpleConcordEvent(eventName) {
+                if (window.Concord && typeof window.Concord.TrackSimpleEvent === 'function') {
+                    window.Concord.TrackSimpleEvent(eventName);
+                }
+            }
+
+            setUTMPropertiesOnUserLocalStorage();
+
+            /* All DefunctEventCalled events are deprecated, do not use */
+            window.Track = function (event, properties, callback) {
+                TrackSimpleConcordEvent('Defunct Event Called');
+            }
+
+            window.TrackSuperProp = function (properties) {
+                TrackSimpleConcordEvent('Defunct Event Called');
+            }
+
+            window.TrackSuperPropOnce = function (properties) {
+                TrackSimpleConcordEvent('Defunct Event Called');
+            }
+
+            window.TrackPeopleProp = function (properties) {
+               TrackSimpleConcordEvent('Defunct Event Called');
+            }
+
+            window.TrackTabClick = function (pageName, tabName, properties) {
+               TrackSimpleConcordEvent('Defunct Event Called');
+            }
+
+            window.TrackActionClick = function (pageName, buttonName, properties) {
+                // Need to create an event in EventName for each combo here otherwise it's not very useful
+                // to just know that a user clicked on a button but not what it was
+                TrackSimpleConcordEvent('Button Click ' + pageName + ' ' + buttonName);
+            }
+
+            // Use this function to track user link clicks. You need a special function for this, since
+            // the browser reloads a new page when the user clicks a link.
+            window.TrackLinks = function (query, eventName, properties) {
+                TrackSimpleConcordEvent('Defunct Event Called');
+            }
+
+
+                var userInfoString = window.localStorage.getItem('JeeneeUserInfo');
+                if ((null != userInfoString) && ('' != userInfoString) && ('null' != userInfoString)) {
+                    var savedUserInfo = JSON.parse(userInfoString);
+                    if ((null != savedUserInfo) && (null != savedUserInfo.UserInfo) && (window.localStorage.getItem('JeeneeNewUser') == 'true')) {
+                        window.JeeneeAnalyticsNewUser = true;
+                        window.localStorage.removeItem('JeeneeNewUser');
+
+                        // See if this is a brand new user.  If so we need to alias so we don't break the signup funnel
+                        TrackSimpleConcordEvent('New Signup Web');
+                    }
+                }
+.Pattern {
+        color: #1a73e8 !important;
+        cursor: pointer;
+    }
+    .Pattern:hover {
+        color: #19BCE6 !important;
+    }
+window.VerifiedAjaxPostToken = 'dummy:dummy';
+            var verifiedAjaxPost = function (options, errorOptions) {
+                if (!options.headers) {
+                    options.headers = {}
+                }
+                options.method = 'POST'
+
+                errorOptions = errorOptions || {};
+                return $.ajax(options).fail((jqXHR, textStatus, errorThrown) => {
+                    if (
+                        !errorOptions.disableErrorReporting &&
+                        window.ErrorHandling &&
+                        typeof window.ErrorHandling.ReportHttpError === 'function'
+                    ) {
+                        window.ErrorHandling.ReportHttpError('post', options.url, jqXHR.status, {
+                            error: errorOptions.error,
+                            errorThrown,
+                            textStatus,
+                            responseText: jqXHR.responseText,
+                        });
+                    }
+                });
+            }
+
+            window.verifiedAjaxPost = verifiedAjaxPost
+            var reloadPage = function (nonce) {
+                // if there is already a nonce=, remove it
+                var currentSearch = window.location.search
+                var currentSearchSplit = currentSearch.split("&nonce=")
+                if (currentSearchSplit.length > 1) {
+                    currentSearchSplit[1] = ""
+                    currentSearch = currentSearchSplit.join("")
+                }
+                window.location.search = currentSearch + "&nonce=" + (nonce ? nonce : Math.random())
+            }
+            // GLOBALS
+            window.DEBUG_MODE = false
+            window.ALLOW_DEBUG_LOGGING = false
+
+            window.getUserId = function () {
+              return '22790121'
+            }
+            window.getUserRole = function() {
+              return 'Member';
+            }
+            window.getUserCorporatePlan = function() {
+              return 0;
+            }
+            window.getIsCoreAdmin = function () {
+              return false;
+            }
+
+            window.ServiceAccountFeatureUsage = {"GcsObjectStore":{"InAccount":false,"InTeam":false,"KeyExport":true,"FeatureName":"Google Cloud Storage object store","DocsLink":"https://support.google.com/appsheet/answer/10106382"},"BigQuery":{"InAccount":false,"InTeam":false,"KeyExport":true,"FeatureName":"BigQuery data source","DocsLink":"https://support.google.com/appsheet/answer/11905680#configure"},"IntegrationConnectors":{"InAccount":false,"InTeam":false,"KeyExport":false,"FeatureName":"Integration Connectors","DocsLink":"https://support.google.com/appsheet/answer/16178778#set-up-integration-connectors"},"AuditLogExport":{"InAccount":false,"InTeam":false,"KeyExport":false,"FeatureName":"Audit log export to BigQuery","DocsLink":"https://support.google.com/appsheet/answer/12469223#update-dataset-permissions"},"WhitelabelFirebase":{"Apps":[],"FeatureName":"Branded app push notifications","DocsLink":"https://support.google.com/appsheet/answer/10104711"},"ChatApps":{"Apps":[],"FeatureName":"Chat apps","DocsLink":"https://support.google.com/appsheet/answer/12849362#set-iam-policy-for-async-messages"}};
+
+          window.hasRolloutByUserId = (function () {
+          const rollouts = new Set(
+            ["ActionNameLocalization","AIVerbsCategorize","AIVerbsExtract","AIVerbsExtractTable","AIVerbsFastFollow","AIVerbsGA","AiVerbsRecommendation","ApiTemplateCreateAppStatusCodes","AutoResolution","BlockEditorIfWasmUnsupported","BulkActionPerf","Cascadia","CheckDiscardedActions","ConsentDialogTranslation","DesktopSliceFormValidation","DynamicValidityEnums","EnableQuickSyncForASDBApps","FirebaseHttpV1MigrationBrandedApps","FixCancelSync","FixChildFormContext","FixLinkToFormSync","FixTouchDoubleClick","FormatExpressionWithoutWasm","GoogleMapsPassRegion","GroupByFix","HtmlReactParserPatch","ImportMigrationDatabaseButton","InContextActionsAndColumns","InlineViewFormatting","InputsWithIMEWorkaround","IntegrationConnectorModalFlow","LicenseV2ShowWarning","MemoizeAugmentDataContext","MRREditorKnob","NewCloudConnectorsRecommendation","NewFakeIntercom","NewTemplatesPage","NoClearBeforeWrite","NormalizeInlineViewStates","OktaGALaunch","RefactorOverlayActions","RemoveDefaultSMSChannel","RRUpsert","SerializeFilterExprInSetCurrentUiState","ShowServiceAccountBanner","SliceDataContext","SmallActionsImprovements","TableCacheKey","TaskTesting","UseParentFilters","UseTypeDisplayInDesktopUIDrilldownTree","ValidateEnumValueOnRestAdd","XABindContextAwareness","XADataPlaceholder"]
+          );
+
+          return function (rolloutName) { return rollouts.has(rolloutName); }
+          })();
+Loading...
+We're setting up your new app...
+close
+Error Creating App
+OK
+Start with a template
+AppSheet
+FREE
+arrow_drop_down
+How to create an app
+Pricing
+Templates
+Blog
+My account
+keyboard_arrow_down
+My apps
+My account
+warning
+My team
+Help Resources
+How to create an app
+Pricing
+Templates
+Blog
+My apps
+My account
+warning
+My team
+Help Resources
+米飯課への製造依頼-22790121 Documentation
+(function() {
+        if (self.ReportingObserver) {
+            const observer = new ReportingObserver((reports) => {
+                reports.forEach((report) => {
+                    if (report.body.blockedURL === 'trusted-types-sink') {
+                        const ttMsg = "TT Error: " + report.body.sample;
+                        const data = {
+                            url: report.body.documentURL,
+                            msg: ttMsg,
+                            errorContext: report.body.sourceFile,
+                            line: report.body.lineNumber,
+                        };
+
+                        const headers = {
+                            'Content-Type': 'application/json',
+                        };
+
+                        const blob = new Blob([JSON.stringify(data)], headers);
+                        navigator.sendBeacon('/manage/JavaScriptError', blob);
+                    }
+                });
+            },
+            {
+                types: ["csp-violation"],
+            });
+
+            // Start observing errors
+            observer.observe();
+        }
+    })();
+Generated at:
+3/25/2026, 1:11:22 PM
+米飯課への製造依頼
+Print or Save as PDF
+Data Summary
+8 Tables
+112 Columns
+7 Slices
+UX Summary
+46 Views
+5 Format Rules
+Behavior Summary
+31 Actions
+0 Workflow Rules
+Short Name
+米飯課への製造依頼
+Version
+1.000296
+Default app folder
+/appsheet/data/米飯課への製造依頼-22790121
+Function
+Planning_and_Project_Management
+Runnable?
+Yes
+Deployable?
+No
+Personal use only?
+No
+Data
+Collapse
+Tables
+Collapse
+Table name
+Requests
+Table name
+Requests
+Visible?
+ALWAYS
+Shared?
+Yes
+Data locale
+ja-JP
+Schema
+Requests_Schema
+Are updates allowed?
+ALL_CHANGES
+Source Path
+BeihanRequestDB
+Worksheet Name/Qualifier
+Requests
+Data Source
+google
+Store for image and file capture
+_Default
+Column Order List
+_RowNumber
+Partitioned across many files/sources?
+No
+Partitioned across many worksheets?
+No
+Table name
+_Per User Settings
+Table name
+_Per User Settings
+Visible?
+NEVER
+Shared?
+No
+Data locale
+ja-JP
+Schema
+_Per User Settings_Schema
+Are updates allowed?
+UPDATES_ONLY
+Source Path
+_Per User Settings
+Data Source
+native
+Store for image and file capture
+_Default
+Column Order List
+_RowNumber
+Partitioned across many files/sources?
+No
+Partitioned across many worksheets?
+No
+Table name
+Products
+Table name
+Products
+Visible?
+ALWAYS
+Shared?
+Yes
+Data locale
+ja-JP
+Schema
+Products_Schema
+Are updates allowed?
+ALL_CHANGES
+Source Path
+BeihanRequestDB
+Worksheet Name/Qualifier
+Products
+Data Source
+google
+Store for image and file capture
+_Default
+Column Order List
+_RowNumber
+Partitioned across many files/sources?
+No
+Partitioned across many worksheets?
+No
+Table name
+RequestGroups
+Table name
+RequestGroups
+Visible?
+ALWAYS
+Shared?
+Yes
+Data locale
+ja-JP
+Schema
+RequestGroups_Schema
+Are updates allowed?
+ALL_CHANGES
+Source Path
+BeihanRequestDB
+Worksheet Name/Qualifier
+RequestGroups
+Data Source
+google
+Store for image and file capture
+_Default
+Column Order List
+_RowNumber
+Partitioned across many files/sources?
+No
+Partitioned across many worksheets?
+No
+Table name
+Users
+Table name
+Users
+Visible?
+ALWAYS
+Shared?
+Yes
+Data locale
+ja-JP
+Schema
+Users_Schema
+Are updates allowed?
+ALL_CHANGES
+Source Path
+BeihanRequestDB
+Worksheet Name/Qualifier
+Users
+Data Source
+google
+Store for image and file capture
+_Default
+Column Order List
+_RowNumber
+Partitioned across many files/sources?
+No
+Partitioned across many worksheets?
+No
+Table name
+ChangeLogs
+Table name
+ChangeLogs
+Visible?
+ALWAYS
+Shared?
+Yes
+Data locale
+ja-JP
+Schema
+ChangeLogs_Schema
+Are updates allowed?
+ALL_CHANGES
+Source Path
+BeihanRequestDB
+Worksheet Name/Qualifier
+ChangeLogs
+Data Source
+google
+Store for image and file capture
+_Default
+Column Order List
+_RowNumber
+Partitioned across many files/sources?
+No
+Partitioned across many worksheets?
+No
+Table name
+Process for New Bot - 1 Process Table
+Table name
+Process for New Bot - 1 Process Table
+Visible?
+NEVER
+Shared?
+Yes
+Schema
+Process for New Bot - 1 Process Table_Schema
+Are updates allowed?
+READ_ONLY
+Source Path
+/ProcessStateTables/c56be719-393c-4cbe-848c-80edb983b01a/5a6ecd9a-e5f5-4c6b-82e3-fc5c1a98945a/State Table
+Data Source
+native
+Store for image and file capture
+_Default
+Column Order List
+_RowNumber
+Partitioned across many files/sources?
+No
+Partitioned across many worksheets?
+No
+Table name
+New step Output
+Table name
+New step Output
+Visible?
+NEVER
+Shared?
+Yes
+Schema
+New step Output_Schema
+Are updates allowed?
+READ_ONLY
+Source Path
+/ProcessStateTables/c56be719-393c-4cbe-848c-80edb983b01a/5a6ecd9a-e5f5-4c6b-82e3-fc5c1a98945a/StepOutput_New step
+Data Source
+native
+Store for image and file capture
+_Default
+Column Order List
+_RowNumber
+Partitioned across many files/sources?
+No
+Partitioned across many worksheets?
+No
+Columns
+Collapse
+Schema Name
+_Per User Settings_Schema
+Schema Name
+_Per User Settings_Schema
+Visible?
+ALWAYS
+Collapse
+Column 1:  _RowNumber
+Column name
+_RowNumber
+Visible?
+ALWAYS
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 2:  _EMAIL
+Column name
+_EMAIL
+Visible?
+ALWAYS
+Type
+Email
+Type Qualifier
+{"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+USEREMAIL()
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 3:  _NAME
+Column name
+_NAME
+Visible?
+ALWAYS
+Type
+Name
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+USERNAME()
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 4:  _LOCATION
+Column name
+_LOCATION
+Visible?
+ALWAYS
+Type
+LatLong
+Type Qualifier
+{"RealTime":false,"PublishIfRowKey":null,"KMLFileUrl":null,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 5:  Options Heading
+Column name
+Options Heading
+Visible?
+ALWAYS
+Type
+Show
+Type Qualifier
+{"Category":"Text","Content":"\"These options control the content and behavior of the app\"","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 6:  Option 1
+Column name
+Option 1
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 7:  Option 2
+Column name
+Option 2
+Visible?
+ALWAYS
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 8:  Country Option
+Column name
+Country Option
+Visible?
+ALWAYS
+Type
+Enum
+Type Qualifier
+{"EnumValues":["Australia","Brazil","Canada"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 9:  Language Option
+Column name
+Language Option
+Visible?
+ALWAYS
+Type
+Enum
+Type Qualifier
+{"EnumValues":["English","French","Tamil"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 10:  Option 5
+Column name
+Option 5
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 11:  Option 6
+Column name
+Option 6
+Visible?
+ALWAYS
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 12:  Option 7
+Column name
+Option 7
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 13:  Option 8
+Column name
+Option 8
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 14:  Option 9
+Column name
+Option 9
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 15:  _THISUSER
+Column name
+_THISUSER
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+onlyvalue
+System Defined?
+No
+Key
+Yes
+Part of Key?
+Yes
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Schema Name
+Requests_Schema
+Schema Name
+Requests_Schema
+Visible?
+ALWAYS
+Collapse
+Column 1:  _RowNumber
+Column name
+_RowNumber
+Visible?
+ALWAYS
+Description
+Number of this row
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 2:  RequestId
+Column name
+RequestId
+Visible?
+ALWAYS
+Display name
+=依頼ID
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+UNIQUEID()
+System Defined?
+No
+Key
+Yes
+Part of Key?
+Yes
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 3:  GroupId
+Column name
+GroupId
+Visible?
+ALWAYS
+Display name
+=グループID
+Type
+Ref
+Type Qualifier
+{"ReferencedTableName":"RequestGroups","ReferencedRootTableName":"RequestGroups","ReferencedType":"Text","ReferencedTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ReferencedKeyColumn":"GroupId","IsAPartOf":true,"RelationshipName":null,"InputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 4:  TargetDate
+Column name
+TargetDate
+Visible?
+ALWAYS
+Display name
+=製造日
+Type
+Date
+Type Qualifier
+{"UseLongDateFormat":false,"Valid_If":"=IF(\n  LOOKUP([_THISROW].[Requester], \"Users\", \"FullName\", \"Department\") = \"米飯課\",\n  [_THIS] >= (TODAY() + 14),\n  TRUE\n)","Error_Message_If_Invalid":"=\"14日以内の追加は、生産管理へ直接ご連絡ください。\"","Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+Yes
+Formula version
+0
+Reset on edit?
+No
+Initial value
+TODAY()
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 5:  ProductId
+Column name
+ProductId
+Visible?
+ALWAYS
+Display name
+=品目ID
+Type
+Ref
+Type Qualifier
+{"ReferencedTableName":"Products","ReferencedRootTableName":"Products","ReferencedType":"Text","ReferencedTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ReferencedKeyColumn":"ProductId","IsAPartOf":false,"RelationshipName":null,"InputMode":"Auto","Valid_If":"=IF(\n  CONTEXT(\"View\") = \"米飯課予定登録\",\n  SELECT(Products[ProductId], CONTAINS([ProductName], \"米飯課予定\")),\n  SELECT(Products[ProductId], NOT(CONTAINS([ProductName], \"米飯課予定\")))\n)","Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+=[GroupId].[ProductId]
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 6:  LotCount
+Column name
+LotCount
+Visible?
+ALWAYS
+Display name
+=ロット数
+Type
+Decimal
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"DecimalDigits":3,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 7:  LotSize
+Column name
+LotSize
+Visible?
+ALWAYS
+Display name
+=ロット内数量
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+=[GroupId].[ProductId].[StdLotSize]
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 8:  UnitType
+Column name
+UnitType
+Visible?
+ALWAYS
+Display name
+=数量種類（単位）
+Type
+Enum
+Type Qualifier
+{"EnumValues":["個","切","kg","パック"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+=[ProductId].[StdUnitType]
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 9:  Status
+Column name
+Status
+Visible?
+ALWAYS
+Display name
+=ステータス
+Type
+Enum
+Type Qualifier
+{"EnumValues":["依頼中","確定","差し戻し","米飯課予定"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+=IF(CONTAINS([ProductId].[ProductName], "米飯課予定"), "米飯課予定", "依頼中")
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 10:  Requester
+Column name
+Requester
+Visible?
+ALWAYS
+Display name
+=依頼元（作成者）
+Type
+Enum
+Type Qualifier
+{"EnumValues":[],"AllowOtherValues":true,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":"=Users[FullName]","Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 11:  CreatedAt
+Column name
+CreatedAt
+Visible?
+ALWAYS
+Display name
+=依頼日時（作成日）
+Type
+DateTime
+Type Qualifier
+{"MinValue":null,"MaxValue":null,"UseLongDateFormat":false,"IgnoreSeconds":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+=NOW()
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 12:  Approver
+Column name
+Approver
+Visible?
+ALWAYS
+Display name
+=承認者
+Type
+Ref
+Type Qualifier
+{"ReferencedTableName":"Users","ReferencedRootTableName":"Users","ReferencedType":"Text","ReferencedTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ReferencedKeyColumn":"UserId","IsAPartOf":false,"RelationshipName":null,"InputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 13:  ApprovedAt
+Column name
+ApprovedAt
+Visible?
+ALWAYS
+Display name
+=承認日時
+Type
+DateTime
+Type Qualifier
+{"MinValue":null,"MaxValue":null,"UseLongDateFormat":false,"IgnoreSeconds":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 14:  ReturnReason
+Column name
+ReturnReason
+Visible?
+ALWAYS
+Display name
+=差し戻し理由
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 15:  Timeslot
+Column name
+Timeslot
+Visible?
+ALWAYS
+Display name
+=時間帯
+Type
+Enum
+Type Qualifier
+{"EnumValues":["早朝","昼間"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+=[ProductId].[DefaultTimeSlot]
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 16:  OverrideTime
+Column name
+OverrideTime
+Visible?
+ALWAYS
+Display name
+=米飯稼働予定時間（分）
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":"=[Status] = \"米飯課予定\"","Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 17:  Reason
+Column name
+Reason
+Visible?
+ALWAYS
+Display name
+=依頼対応不可の理由
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":"=ISNOTBLANK([OverrideTime])","Required_If":"=ISNOTBLANK([OverrideTime])","Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 18:  TaskName
+Column name
+TaskName
+Visible?
+ALWAYS
+Display name
+=作業名（表示用）
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=[ProductId].[TaskName]
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 19:  TotalAmount
+Column name
+TotalAmount
+Visible?
+ALWAYS
+Display name
+=総製造数
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":1,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=ROUND([LotCount] * [LotSize])
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 20:  EstTime
+Column name
+EstTime
+Visible?
+ALWAYS
+Display name
+=予想稼働時間（分）
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=IF([OverrideTime] > 0, [OverrideTime], ROUND([LotCount] * [ProductId].[RequiredTime]))
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 21:  ProductName
+Column name
+ProductName
+Visible?
+ALWAYS
+Display name
+=品目名（表示用）
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=[ProductId].[ProductName]
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 22:  CalendarLabel
+Column name
+CalendarLabel
+Visible?
+ALWAYS
+Display name
+=カレンダー表示用
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=IF([Status] = "米飯課予定", "🚧 " & [Reason] & " (" & [EstTime] & "分)", [ProductId].[TaskName] & " : " & [TotalAmount] & [ProductId].[StdUnitType] & " (" & [EstTime] & "分)")
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 23:  StatusColor
+Column name
+StatusColor
+Visible?
+ALWAYS
+Type
+Color
+Type Qualifier
+{"EnumValues":["Yellow","Green","Red","Purple","Black"],"AllowOtherValues":true,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=SWITCH([Status], "依頼中", "Yellow", "確定", "Green", "差し戻し", "Red", "米飯課予定", "Purple", "Gray")
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 24:  EstTimeMorning
+Column name
+EstTimeMorning
+Visible?
+ALWAYS
+Display name
+=早朝稼働時間
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=IF([TimeSlot] = "早朝", [EstTime], 0)
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 25:  EstTimeDay
+Column name
+EstTimeDay
+Visible?
+ALWAYS
+Display name
+=昼間稼働時間
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=IF([TimeSlot] = "昼間", [EstTime], 0)
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 26:  ProdCalendarLabel
+Column name
+ProdCalendarLabel
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=IF(
+  [Status] = "米飯課予定",
+  "🚧 " & [Reason],
+  [ProductId].[ProductName] & " - " & [ProductId].[TaskName] & " : " & [TotalAmount] & [ProductId].[StdUnitType]
+)
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 27:  DateAndSlot
+Column name
+DateAndSlot
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=TEXT([TargetDate], "M/D") & " " & [Timeslot]
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 28:  EstTotalMorning
+Column name
+EstTotalMorning
+Visible?
+ALWAYS
+Display name
+=早朝
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=SUM(SELECT(Requests[EstTime], AND([TargetDate] = [_THISROW].[TargetDate], [TimeSlot] = "早朝")))
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 29:  EstTotalDay
+Column name
+EstTotalDay
+Visible?
+ALWAYS
+Display name
+=昼間
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=SUM(SELECT(Requests[EstTime], AND([TargetDate] = [_THISROW].[TargetDate], [TimeSlot] = "昼間")))
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 30:  Related ChangeLogs
+Column name
+Related ChangeLogs
+Visible?
+ALWAYS
+Description
+ChangeLogs entries that reference this entry in the RequestId column
+Display name
+="変更履歴"
+Type
+List
+Type Qualifier
+{"ElementType":"Ref","ElementTypeQualifier":"{\"ReferencedTableName\":\"ChangeLogs\",\"ReferencedRootTableName\":\"ChangeLogs\",\"ReferencedType\":\"Text\",\"ReferencedTypeQualifier\":\"{\\\"MaxLength\\\":null,\\\"MinLength\\\":null,\\\"LongTextFormatting\\\":\\\"Plain Text\\\",\\\"IsMulticolumnKey\\\":false,\\\"Valid_If\\\":null,\\\"Error_Message_If_Invalid\\\":null,\\\"Show_If\\\":null,\\\"Required_If\\\":null,\\\"Editable_If\\\":null,\\\"Reset_If\\\":null,\\\"Suggested_Values\\\":null}\",\"ReferencedKeyColumn\":\"LogId\",\"IsAPartOf\":false,\"RelationshipName\":null,\"InputMode\":\"Auto\",\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ItemSeparator":" , ","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+REF_ROWS("ChangeLogs", "RequestId")
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+NFC Scannable
+No
+Sensitive data
+No
+Column 31:  Date_Instruction
+Column name
+Date_Instruction
+Visible?
+ALWAYS
+Type
+Show
+Type Qualifier
+{"Category":"Text","Content":"=\"米飯課の予定は原則14日先から選択してください。直近の場合は生産管理へご連絡ください。\"","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=""
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Schema Name
+Products_Schema
+Schema Name
+Products_Schema
+Visible?
+ALWAYS
+Collapse
+Column 1:  _RowNumber
+Column name
+_RowNumber
+Visible?
+ALWAYS
+Description
+Number of this row
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 2:  ProductId
+Column name
+ProductId
+Visible?
+ALWAYS
+Display name
+=品目ID
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+=UNIQUEID()
+System Defined?
+No
+Key
+Yes
+Part of Key?
+Yes
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 3:  ProductName
+Column name
+ProductName
+Visible?
+ALWAYS
+Display name
+=品目名
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 4:  Category
+Column name
+Category
+Visible?
+ALWAYS
+Display name
+=区分
+Type
+Enum
+Type Qualifier
+{"EnumValues":["冷凍","加工品"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 5:  TaskName
+Column name
+TaskName
+Visible?
+ALWAYS
+Display name
+=作業名
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 6:  LotUnit
+Column name
+LotUnit
+Visible?
+ALWAYS
+Display name
+=ロット単位
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 7:  RequiredTime
+Column name
+RequiredTime
+Visible?
+ALWAYS
+Display name
+=所要時間（分）
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 8:  StdLotSize
+Column name
+StdLotSize
+Visible?
+ALWAYS
+Display name
+=標準ロット内数量
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 9:  StdUnitType
+Column name
+StdUnitType
+Visible?
+ALWAYS
+Display name
+=標準数量種類
+Type
+Enum
+Type Qualifier
+{"EnumValues":["個","切","パック","kg"],"AllowOtherValues":true,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 10:  StorageLocation
+Column name
+StorageLocation
+Visible?
+ALWAYS
+Display name
+=入庫先
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 11:  DefaultTimeSlot
+Column name
+DefaultTimeSlot
+Visible?
+ALWAYS
+Display name
+=担当部署
+Type
+Enum
+Type Qualifier
+{"EnumValues":["昼間","早朝"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 12:  Related RequestGroups
+Column name
+Related RequestGroups
+Visible?
+ALWAYS
+Description
+RequestGroups entries that reference this entry in the ProductId column
+Type
+List
+Type Qualifier
+{"ElementType":"Ref","ElementTypeQualifier":"{\"ReferencedTableName\":\"RequestGroups\",\"ReferencedRootTableName\":\"RequestGroups\",\"ReferencedType\":\"Text\",\"ReferencedTypeQualifier\":\"{\\\"MaxLength\\\":null,\\\"MinLength\\\":null,\\\"LongTextFormatting\\\":\\\"Plain Text\\\",\\\"IsMulticolumnKey\\\":false,\\\"Valid_If\\\":null,\\\"Error_Message_If_Invalid\\\":null,\\\"Show_If\\\":null,\\\"Required_If\\\":null,\\\"Editable_If\\\":null,\\\"Reset_If\\\":null,\\\"Suggested_Values\\\":null}\",\"ReferencedKeyColumn\":\"GroupId\",\"IsAPartOf\":false,\"RelationshipName\":null,\"InputMode\":\"Auto\",\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ItemSeparator":" , ","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+REF_ROWS("RequestGroups", "ProductId")
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+NFC Scannable
+No
+Sensitive data
+No
+Column 13:  Related Requests
+Column name
+Related Requests
+Visible?
+ALWAYS
+Description
+Requests entries that reference this entry in the ProductId column
+Type
+List
+Type Qualifier
+{"ElementType":"Ref","ElementTypeQualifier":"{\"ReferencedTableName\":\"Requests\",\"ReferencedRootTableName\":\"Requests\",\"ReferencedType\":\"Text\",\"ReferencedTypeQualifier\":\"{\\\"MaxLength\\\":null,\\\"MinLength\\\":null,\\\"LongTextFormatting\\\":\\\"Plain Text\\\",\\\"IsMulticolumnKey\\\":false,\\\"Valid_If\\\":null,\\\"Error_Message_If_Invalid\\\":null,\\\"Show_If\\\":null,\\\"Required_If\\\":null,\\\"Editable_If\\\":null,\\\"Reset_If\\\":null,\\\"Suggested_Values\\\":null}\",\"ReferencedKeyColumn\":\"RequestId\",\"IsAPartOf\":false,\"RelationshipName\":null,\"InputMode\":\"Auto\",\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ItemSeparator":" , ","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+REF_ROWS("Requests", "ProductId")
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+NFC Scannable
+No
+Sensitive data
+No
+Column 14:  TimePerUnit
+Column name
+TimePerUnit
+Visible?
+ALWAYS
+Display name
+=単位あたりの予想時間
+Type
+Decimal
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"DecimalDigits":2,"NumericDigits":1,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=([RequiredTime] * 1.0) / [StdLotSize]
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 15:  DisplayName
+Column name
+DisplayName
+Visible?
+ALWAYS
+Display name
+=品名＋作業名
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=[ProductName] & " - " & [TaskName]
+Read-Only
+Yes
+Hidden
+No
+Label
+Yes
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Schema Name
+RequestGroups_Schema
+Schema Name
+RequestGroups_Schema
+Visible?
+ALWAYS
+Collapse
+Column 1:  _RowNumber
+Column name
+_RowNumber
+Visible?
+ALWAYS
+Description
+Number of this row
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 2:  GroupId
+Column name
+GroupId
+Visible?
+ALWAYS
+Display name
+=グループID
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+Yes
+Formula version
+0
+Reset on edit?
+No
+Initial value
+UNIQUEID()
+System Defined?
+No
+Key
+Yes
+Part of Key?
+Yes
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 3:  ProductId
+Column name
+ProductId
+Visible?
+ALWAYS
+Display name
+="対象品目ID"
+Type
+Ref
+Type Qualifier
+{"ReferencedTableName":"Products","ReferencedRootTableName":"Products","ReferencedType":"Text","ReferencedTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ReferencedKeyColumn":"ProductId","IsAPartOf":false,"RelationshipName":null,"InputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 4:  LotSize
+Column name
+LotSize
+Visible?
+ALWAYS
+Display name
+=ロット内数量
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 5:  UnitType
+Column name
+UnitType
+Visible?
+ALWAYS
+Display name
+=数量種類（単位）
+Type
+Enum
+Type Qualifier
+{"EnumValues":["個","切"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 6:  Memo
+Column name
+Memo
+Visible?
+ALWAYS
+Display name
+=メモ
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 7:  CreatedBy
+Column name
+CreatedBy
+Visible?
+ALWAYS
+Display name
+=入力者
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":"=Users[FullName]","Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 8:  CreatedAt
+Column name
+CreatedAt
+Visible?
+ALWAYS
+Display name
+=入力時
+Type
+DateTime
+Type Qualifier
+{"MinValue":null,"MaxValue":null,"UseLongDateFormat":false,"IgnoreSeconds":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+=NOW()
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 9:  Related Requests
+Column name
+Related Requests
+Visible?
+ALWAYS
+Display name
+=作業日程追加
+Type
+List
+Type Qualifier
+{"ElementType":"Ref","ElementTypeQualifier":"{\"ReferencedTableName\":\"Requests\",\"ReferencedRootTableName\":\"Requests\",\"ReferencedType\":\"Text\",\"ReferencedTypeQualifier\":\"{\\\"MaxLength\\\":null,\\\"MinLength\\\":null,\\\"LongTextFormatting\\\":\\\"Plain Text\\\",\\\"IsMulticolumnKey\\\":false,\\\"Valid_If\\\":null,\\\"Error_Message_If_Invalid\\\":null,\\\"Show_If\\\":null,\\\"Required_If\\\":null,\\\"Editable_If\\\":null,\\\"Reset_If\\\":null,\\\"Suggested_Values\\\":null}\",\"ReferencedKeyColumn\":\"RequestId\",\"IsAPartOf\":false,\"RelationshipName\":null,\"InputMode\":\"Auto\",\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ItemSeparator":" , ","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+REF_ROWS("Requests", "GroupId")
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+NFC Scannable
+No
+Sensitive data
+No
+Column 10:  DisplayTimeSlot
+Column name
+DisplayTimeSlot
+Visible?
+ALWAYS
+Display name
+=時間帯
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=[ProductId].[DefaultTimeSlot]
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Schema Name
+Users_Schema
+Schema Name
+Users_Schema
+Visible?
+ALWAYS
+Collapse
+Column 1:  _RowNumber
+Column name
+_RowNumber
+Visible?
+ALWAYS
+Description
+Number of this row
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 2:  UserId
+Column name
+UserId
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+=UNIQUEID()
+System Defined?
+No
+Key
+Yes
+Part of Key?
+Yes
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 3:  Email
+Column name
+Email
+Visible?
+ALWAYS
+Description
+=グーグルアドレス
+Display name
+=メールアドレス
+Type
+Email
+Type Qualifier
+{"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+Yes
+Column 4:  FullName
+Column name
+FullName
+Visible?
+ALWAYS
+Description
+=アプリ画面上に表示される名前（例: 山田太郎、スペースなしで）
+Display name
+=氏名
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+Yes
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 5:  Department
+Column name
+Department
+Visible?
+ALWAYS
+Description
+=惣菜課 米飯課 （この値で権限を分ける）
+Display name
+=部署名
+Type
+Enum
+Type Qualifier
+{"EnumValues":["米飯課","生産管理"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 6:  Role
+Column name
+Role
+Visible?
+ALWAYS
+Description
+=User Admin など（必要に応じて設定）
+Display name
+=権限ロール
+Type
+Enum
+Type Qualifier
+{"EnumValues":["User","Admin"],"AllowOtherValues":false,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 7:  Related Requests By Approver
+Column name
+Related Requests By Approver
+Visible?
+ALWAYS
+Description
+Requests entries that reference this entry in the Approver column
+Type
+List
+Type Qualifier
+{"ElementType":"Ref","ElementTypeQualifier":"{\"ReferencedTableName\":\"Requests\",\"ReferencedRootTableName\":\"Requests\",\"ReferencedType\":\"Text\",\"ReferencedTypeQualifier\":\"{\\\"MaxLength\\\":null,\\\"MinLength\\\":null,\\\"LongTextFormatting\\\":\\\"Plain Text\\\",\\\"IsMulticolumnKey\\\":false,\\\"Valid_If\\\":null,\\\"Error_Message_If_Invalid\\\":null,\\\"Show_If\\\":null,\\\"Required_If\\\":null,\\\"Editable_If\\\":null,\\\"Reset_If\\\":null,\\\"Suggested_Values\\\":null}\",\"ReferencedKeyColumn\":\"RequestId\",\"IsAPartOf\":false,\"RelationshipName\":null,\"InputMode\":\"Auto\",\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ItemSeparator":" , ","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+REF_ROWS("Requests", "Approver")
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+NFC Scannable
+No
+Sensitive data
+No
+Schema Name
+ChangeLogs_Schema
+Schema Name
+ChangeLogs_Schema
+Visible?
+ALWAYS
+Collapse
+Column 1:  _RowNumber
+Column name
+_RowNumber
+Visible?
+ALWAYS
+Description
+Number of this row
+Type
+Number
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+Yes
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 2:  LogId
+Column name
+LogId
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+Yes
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+UNIQUEID()
+System Defined?
+No
+Key
+Yes
+Part of Key?
+Yes
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 3:  RequestId
+Column name
+RequestId
+Visible?
+ALWAYS
+Display name
+="対象依頼"
+Type
+Ref
+Type Qualifier
+{"ReferencedTableName":"Requests","ReferencedRootTableName":"Requests","ReferencedType":"Text","ReferencedTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ReferencedKeyColumn":"RequestId","IsAPartOf":false,"RelationshipName":null,"InputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 4:  NewDate
+Column name
+NewDate
+Visible?
+ALWAYS
+Display name
+="新規製造日"
+Type
+Date
+Type Qualifier
+{"UseLongDateFormat":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+Yes
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 5:  NewLotCount
+Column name
+NewLotCount
+Visible?
+ALWAYS
+Display name
+="新規ロット数"
+Type
+Decimal
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"DecimalDigits":3,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 6:  Reason
+Column name
+Reason
+Visible?
+ALWAYS
+Display name
+="変更内容と理由"
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 7:  ChangedBy
+Column name
+ChangedBy
+Visible?
+ALWAYS
+Display name
+="変更者"
+Type
+Enum
+Type Qualifier
+{"EnumValues":[],"AllowOtherValues":true,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":"=RequestGroups[CreatedBy]","Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 8:  Timestamp
+Column name
+Timestamp
+Visible?
+ALWAYS
+Display name
+="変更日時"
+Type
+DateTime
+Type Qualifier
+{"MinValue":null,"MaxValue":null,"UseLongDateFormat":false,"IgnoreSeconds":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+Initial value
+NOW()
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 9:  NewTotalAmount
+Column name
+NewTotalAmount
+Visible?
+ALWAYS
+Display name
+=新・総製造数
+Type
+Decimal
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"DecimalDigits":2,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=ROUND([NewLotCount] * [RequestId].[LotSize])
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 10:  TargetProductName
+Column name
+TargetProductName
+Visible?
+ALWAYS
+Display name
+=”品名”
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=[RequestId].[ProductName]
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 11:  TargetTaskName
+Column name
+TargetTaskName
+Visible?
+ALWAYS
+Display name
+=”作業名”
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+App formula
+=[RequestId].[TaskName]
+Read-Only
+Yes
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+Yes
+LocaleName
+ja-JP
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Schema Name
+Process for New Bot - 1 Process Table_Schema
+Schema Name
+Process for New Bot - 1 Process Table_Schema
+Visible?
+NEVER
+Collapse
+Column 1:  Instance Id
+Column name
+Instance Id
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+Yes
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 2:  LogId
+Column name
+LogId
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 3:  RequestId
+Column name
+RequestId
+Visible?
+ALWAYS
+Type
+Ref
+Type Qualifier
+{"ReferencedTableName":"Requests","ReferencedRootTableName":"Requests","ReferencedType":"Text","ReferencedTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ReferencedKeyColumn":"RequestId","IsAPartOf":false,"RelationshipName":null,"InputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 4:  NewDate
+Column name
+NewDate
+Visible?
+ALWAYS
+Type
+Date
+Type Qualifier
+{"UseLongDateFormat":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 5:  NewLotCount
+Column name
+NewLotCount
+Visible?
+ALWAYS
+Type
+Decimal
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"DecimalDigits":3,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 6:  Reason
+Column name
+Reason
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 7:  ChangedBy
+Column name
+ChangedBy
+Visible?
+ALWAYS
+Type
+Enum
+Type Qualifier
+{"EnumValues":[],"AllowOtherValues":true,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":"=RequestGroups[CreatedBy]","Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 8:  Timestamp
+Column name
+Timestamp
+Visible?
+ALWAYS
+Type
+DateTime
+Type Qualifier
+{"MinValue":null,"MaxValue":null,"UseLongDateFormat":false,"IgnoreSeconds":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 9:  NewTotalAmount
+Column name
+NewTotalAmount
+Visible?
+ALWAYS
+Type
+Decimal
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"DecimalDigits":2,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 10:  TargetProductName
+Column name
+TargetProductName
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 11:  TargetTaskName
+Column name
+TargetTaskName
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 12:  New step
+Column name
+New step
+Visible?
+ALWAYS
+Type
+Ref
+Type Qualifier
+{"ReferencedTableName":"New step Output","ReferencedRootTableName":null,"ReferencedType":"Text","ReferencedTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ReferencedKeyColumn":"Instance Id","IsAPartOf":false,"RelationshipName":null,"InputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Schema Name
+New step Output_Schema
+Schema Name
+New step Output_Schema
+Visible?
+NEVER
+Collapse
+Column 1:  Instance Id
+Column name
+Instance Id
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+Yes
+Part of Key?
+No
+Fixed definition?
+No
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 2:  LogId
+Column name
+LogId
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 3:  RequestId
+Column name
+RequestId
+Visible?
+ALWAYS
+Type
+Ref
+Type Qualifier
+{"ReferencedTableName":"Requests","ReferencedRootTableName":"Requests","ReferencedType":"Text","ReferencedTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","ReferencedKeyColumn":"RequestId","IsAPartOf":false,"RelationshipName":null,"InputMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 4:  NewDate
+Column name
+NewDate
+Visible?
+ALWAYS
+Type
+Date
+Type Qualifier
+{"UseLongDateFormat":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 5:  NewLotCount
+Column name
+NewLotCount
+Visible?
+ALWAYS
+Type
+Decimal
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"DecimalDigits":3,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 6:  Reason
+Column name
+Reason
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 7:  ChangedBy
+Column name
+ChangedBy
+Visible?
+ALWAYS
+Type
+Enum
+Type Qualifier
+{"EnumValues":[],"AllowOtherValues":true,"AutoCompleteOtherValues":true,"BaseType":"Text","BaseTypeQualifier":"{\"MaxLength\":null,\"MinLength\":null,\"LongTextFormatting\":\"Plain Text\",\"IsMulticolumnKey\":false,\"Valid_If\":null,\"Error_Message_If_Invalid\":null,\"Show_If\":null,\"Required_If\":null,\"Editable_If\":null,\"Reset_If\":null,\"Suggested_Values\":null}","EnumInputMode":"Auto","Valid_If":"=RequestGroups[CreatedBy]","Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 8:  Timestamp
+Column name
+Timestamp
+Visible?
+ALWAYS
+Type
+DateTime
+Type Qualifier
+{"MinValue":null,"MaxValue":null,"UseLongDateFormat":false,"IgnoreSeconds":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 9:  NewTotalAmount
+Column name
+NewTotalAmount
+Visible?
+ALWAYS
+Type
+Decimal
+Type Qualifier
+{"MaxValue":null,"MinValue":null,"StepValue":null,"DecimalDigits":2,"NumericDigits":null,"ShowThousandsSeparator":true,"NumberDisplayMode":"Auto","Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+No
+Scannable
+No
+Sensitive data
+No
+Column 10:  TargetProductName
+Column name
+TargetProductName
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Column 11:  TargetTaskName
+Column name
+TargetTaskName
+Visible?
+ALWAYS
+Type
+Text
+Type Qualifier
+{"MaxLength":null,"MinLength":null,"LongTextFormatting":"Plain Text","IsMulticolumnKey":false,"Valid_If":null,"Error_Message_If_Invalid":null,"Show_If":null,"Required_If":null,"Editable_If":null,"Reset_If":null,"Suggested_Values":null}
+Read-Only
+No
+Hidden
+No
+Label
+No
+Formula version
+0
+Reset on edit?
+No
+System Defined?
+No
+Key
+No
+Part of Key?
+No
+Fixed definition?
+Yes
+Editable Initial Value?
+Yes
+Virtual?
+No
+Searchable
+Yes
+Scannable
+No
+Sensitive data
+No
+Slices
+Collapse
+Slice Name
+Tasks_To_Approve
+Slice Name
+Tasks_To_Approve
+Slice Columns
+_RowNumber
+RequestId
+GroupId
+TargetDate
+ProductId
+LotCount
+LotSize
+UnitType
+Status
+Requester
+CreatedAt
+Approver
+ApprovedAt
+ReturnReason
+TaskName
+TotalAmount
+EstTime
+ProductName
+CalendarLabel
+StatusColor
+Timeslot
+OverrideTime
+Reason
+EstTimeMorning
+EstTimeDay
+ProdCalendarLabel
+DateAndSlot
+EstTotalMorning
+EstTotalDay
+Related ChangeLogs
+Date_Instruction
+Row filter condition
+=AND([TargetDate] >= TODAY(), [TargetDate] <= TODAY() + 4)
+Update mode
+ALL_CHANGES
+Source Table
+Requests
+Visible?
+ALWAYS
+Slice Actions
+**auto**
+Slice Name
+Requests_早朝
+Slice Name
+Requests_早朝
+Slice Columns
+_RowNumber
+RequestId
+GroupId
+TargetDate
+ProductId
+LotCount
+LotSize
+UnitType
+Status
+Requester
+CreatedAt
+Approver
+ApprovedAt
+ReturnReason
+Timeslot
+TaskName
+TotalAmount
+EstTime
+ProductName
+CalendarLabel
+StatusColor
+OverrideTime
+Reason
+EstTimeMorning
+EstTimeDay
+ProdCalendarLabel
+DateAndSlot
+EstTotalMorning
+EstTotalDay
+Related ChangeLogs
+Date_Instruction
+Row filter condition
+=[TimeSlot] = "早朝"
+Update mode
+ALL_CHANGES
+Source Table
+Requests
+Visible?
+ALWAYS
+Slice Actions
+**auto**
+Slice Name
+Requests_昼間
+Slice Name
+Requests_昼間
+Slice Columns
+_RowNumber
+RequestId
+GroupId
+TargetDate
+ProductId
+LotCount
+LotSize
+UnitType
+Status
+Requester
+CreatedAt
+Approver
+ApprovedAt
+ReturnReason
+Timeslot
+TaskName
+TotalAmount
+EstTime
+ProductName
+CalendarLabel
+StatusColor
+OverrideTime
+Reason
+EstTimeMorning
+EstTimeDay
+ProdCalendarLabel
+DateAndSlot
+EstTotalMorning
+EstTotalDay
+Related ChangeLogs
+Date_Instruction
+Row filter condition
+=[TimeSlot] = "昼間"
+Update mode
+ALL_CHANGES
+Source Table
+Requests
+Visible?
+ALWAYS
+Slice Actions
+**auto**
+Slice Name
+Tasks_To_Approve_昼間
+Slice Name
+Tasks_To_Approve_昼間
+Slice Columns
+_RowNumber
+RequestId
+GroupId
+TargetDate
+ProductId
+LotCount
+LotSize
+UnitType
+Status
+Requester
+CreatedAt
+Approver
+ApprovedAt
+ReturnReason
+TaskName
+TotalAmount
+EstTime
+ProductName
+CalendarLabel
+StatusColor
+Timeslot
+OverrideTime
+Reason
+EstTimeMorning
+EstTimeDay
+ProdCalendarLabel
+DateAndSlot
+EstTotalMorning
+EstTotalDay
+Related ChangeLogs
+Date_Instruction
+Row filter condition
+=AND(
+  [TimeSlot] = "昼間",
+  [TargetDate] >= TODAY(),
+  [TargetDate] <= TODAY() + 4
+)
+Update mode
+ALL_CHANGES
+Source Table
+Requests
+Visible?
+ALWAYS
+Slice Actions
+**auto**
+Slice Name
+Tasks_To_Approve_早朝
+Slice Name
+Tasks_To_Approve_早朝
+Slice Columns
+_RowNumber
+RequestId
+GroupId
+TargetDate
+ProductId
+LotCount
+LotSize
+UnitType
+Status
+Requester
+CreatedAt
+Approver
+ApprovedAt
+ReturnReason
+TaskName
+TotalAmount
+EstTime
+ProductName
+CalendarLabel
+StatusColor
+Timeslot
+OverrideTime
+Reason
+EstTimeMorning
+EstTimeDay
+ProdCalendarLabel
+DateAndSlot
+EstTotalMorning
+EstTotalDay
+Related ChangeLogs
+Date_Instruction
+Row filter condition
+=AND(
+  [TimeSlot] = "早朝",
+  [TargetDate] >= TODAY(),
+  [TargetDate] <= TODAY() + 4
+)
+Update mode
+ALL_CHANGES
+Source Table
+Requests
+Visible?
+ALWAYS
+Slice Actions
+**auto**
+Slice Name
+DailyChartData
+Slice Name
+DailyChartData
+Slice Columns
+_RowNumber
+RequestId
+GroupId
+TargetDate
+ProductId
+LotCount
+LotSize
+UnitType
+Status
+Requester
+CreatedAt
+Approver
+ApprovedAt
+ReturnReason
+Timeslot
+OverrideTime
+Reason
+TaskName
+TotalAmount
+EstTime
+ProductName
+CalendarLabel
+StatusColor
+EstTimeMorning
+EstTimeDay
+ProdCalendarLabel
+DateAndSlot
+EstTotalMorning
+EstTotalDay
+Related ChangeLogs
+Date_Instruction
+Row filter condition
+=AND(
+  [TargetDate] >= TODAY(),
+  [TargetDate] <= (TODAY() + 21),
+  [_THISROW] = MAXROW("Requests", "_ROWNUMBER", ([TargetDate] = [_THISROW].[TargetDate]))
+)
+Update mode
+ALL_CHANGES
+Source Table
+Requests
+Visible?
+ALWAYS
+Slice Actions
+**auto**
+Slice Name
+米飯課フォーム用データ
+Slice Name
+米飯課フォーム用データ
+Slice Columns
+_RowNumber
+RequestId
+GroupId
+TargetDate
+ProductId
+LotCount
+LotSize
+UnitType
+Status
+Requester
+CreatedAt
+Approver
+ApprovedAt
+ReturnReason
+Timeslot
+OverrideTime
+Reason
+TaskName
+TotalAmount
+EstTime
+ProductName
+CalendarLabel
+StatusColor
+EstTimeMorning
+EstTimeDay
+ProdCalendarLabel
+DateAndSlot
+EstTotalMorning
+EstTotalDay
+Related ChangeLogs
+Date_Instruction
+Row filter condition
+=True
+Update mode
+ALL_CHANGES
+Source Table
+Requests
+Visible?
+ALWAYS
+Slice Actions
+**auto**
+UX
+Collapse
+Views
+Collapse
+View name
+生産管理ダッシュボード
+View name
+生産管理ダッシュボード
+Created by
+App owner
+View type
+dashboard
+Position
+center
+View configuration
+{"ViewEntries":[{"ViewName":"生産管理カレンダー","ViewSize":"Large"},{"ViewName":"統合稼働グラフ（分）","ViewSize":"Large"}],"InteractiveMode":false,"ShowTabs":false,"Events":[],"Icon":"far fa-industry","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+Show if
+=IN(LOOKUP(USEREMAIL(), "Users", "Email", "Role"), {"生産管理", "Admin"})
+View name
+米飯課予定登録
+View name
+米飯課予定登録
+Created by
+App owner
+View type
+form
+Position
+left
+View configuration
+{"ColumnOrder":["Date_Instruction","Requester","ProductId","TargetDate","Timeslot","OverrideTime","Reason"],"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+昼間ダッシュボード
+View name
+昼間ダッシュボード
+Created by
+App owner
+View type
+dashboard
+Position
+right
+View configuration
+{"ViewEntries":[{"ViewName":"昼間カレンダー","ViewSize":"Large"},{"ViewName":"4日後承認昼間","ViewSize":"Large"}],"InteractiveMode":false,"ShowTabs":false,"Events":[],"Icon":"fal fa-sun","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+早朝ダッシュボード
+View name
+早朝ダッシュボード
+Created by
+App owner
+View type
+dashboard
+Position
+right
+View configuration
+{"ViewEntries":[{"ViewName":"早朝カレンダー","ViewSize":"Large"},{"ViewName":"4日後承認早朝","ViewSize":"Large"}],"InteractiveMode":false,"ShowTabs":false,"Events":[],"Icon":"fal fa-sunrise","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+ユーザー管理
+View name
+ユーザー管理
+Created by
+App owner
+View type
+table
+Position
+menu
+View configuration
+{"ColumnWidth":"Default","EnableQuickEdit":false,"ColumnOrder":["FullName","Email","Department","Role"],"GroupBy":[],"GroupAggregate":"NONE","SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[{"EventType":"Row Selected","EventAction":"**auto**"}],"Icon":"fas fa-user","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+Show if
+=LOOKUP(USEREMAIL(), "Users", "Email", "Role") = "Admin"
+View name
+依頼マスタ
+View name
+依頼マスタ
+Created by
+App owner
+View type
+table
+Position
+menu
+View configuration
+{"ColumnWidth":"Default","EnableQuickEdit":false,"ColumnOrder":["ProductName","TaskName","Category","RequiredTime","StdLotSize","StdUnitType","StorageLocation","DefaultTimeSlot","TimePerUnit","ProductId"],"GroupBy":[{"Column":"DefaultTimeSlot","Order":"Ascending"}],"GroupAggregate":"NONE","SortBy":[{"Column":"DisplayName","Order":"Ascending"}],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[{"EventType":"Row Selected","EventAction":"**auto**"}],"Icon":"far fa-book-open","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+Show if
+=IN(LOOKUP(USEREMAIL(), "Users", "Email", "Role"), {"生産管理", "Admin"})
+View name
+確定後の変更履歴
+View name
+確定後の変更履歴
+Created by
+App owner
+View type
+table
+Position
+menu
+View configuration
+{"ColumnWidth":"Default","EnableQuickEdit":false,"ColumnOrder":["Timestamp","ChangedBy","TargetProductName","TargetTaskName","Reason","NewDate","RequestId","NewLotCount","NewTotalAmount"],"GroupBy":[],"GroupAggregate":"NONE","SortBy":[{"Column":"Timestamp","Order":"Descending"}],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[{"EventType":"Row Selected","EventAction":"**auto**"}],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+Show if
+=IN(LOOKUP(USEREMAIL(), "Users", "Email", "Role"), {"米飯課", "Admin"})
+View name
+4日後承認
+View name
+4日後承認
+Created by
+App owner
+View type
+deck
+ActionType
+Square Image
+Position
+ref
+View configuration
+{"MainDeckImageColumn":"**auto**","ImageShape":"Square Image","PrimaryDeckHeaderColumn":"CalendarLabel","SecondaryDeckHeaderColumn":"Status","DeckSummaryColumn":"**auto**","DeckNestedTableColumn":null,"ShowActionBar":true,"ActionColumns":[],"ActionBarEntries":["Approve","差し戻し"],"GroupBy":[{"Column":"TargetDate","Order":"Ascending"}],"GroupAggregate":"NONE","SortBy":[{"Column":"TargetDate","Order":"Ascending"}],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[{"EventType":"Row Selected","EventAction":"**auto**"},{"EventType":"Row Swiped Left","EventAction":"**auto**"},{"EventType":"Row Swiped Right","EventAction":"**auto**"}],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+4日後承認早朝
+View name
+4日後承認早朝
+Created by
+App owner
+View type
+deck
+ActionType
+Square Image
+Position
+ref
+View configuration
+{"MainDeckImageColumn":"**auto**","ImageShape":"Square Image","PrimaryDeckHeaderColumn":"CalendarLabel","SecondaryDeckHeaderColumn":"Status","DeckSummaryColumn":"**auto**","DeckNestedTableColumn":null,"ShowActionBar":true,"ActionColumns":[],"ActionBarEntries":["Approve","差し戻し"],"GroupBy":[{"Column":"TargetDate","Order":"Ascending"}],"GroupAggregate":"NONE","SortBy":[{"Column":"TargetDate","Order":"Ascending"}],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[{"EventType":"Row Selected","EventAction":"**auto**"},{"EventType":"Row Swiped Left","EventAction":"**auto**"},{"EventType":"Row Swiped Right","EventAction":"**auto**"}],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+4日後承認昼間
+View name
+4日後承認昼間
+Created by
+App owner
+View type
+deck
+ActionType
+Square Image
+Position
+ref
+View configuration
+{"MainDeckImageColumn":"**auto**","ImageShape":"Square Image","PrimaryDeckHeaderColumn":"CalendarLabel","SecondaryDeckHeaderColumn":"Status","DeckSummaryColumn":"**auto**","DeckNestedTableColumn":null,"ShowActionBar":true,"ActionColumns":[],"ActionBarEntries":["Approve","差し戻し"],"GroupBy":[{"Column":"TargetDate","Order":"Ascending"}],"GroupAggregate":"NONE","SortBy":[{"Column":"TargetDate","Order":"Ascending"}],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[{"EventType":"Row Selected","EventAction":"**auto**"},{"EventType":"Row Swiped Left","EventAction":"**auto**"},{"EventType":"Row Swiped Right","EventAction":"**auto**"}],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+ChangeLogs_Detail
+View name
+ChangeLogs_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":["NewDate","RequestId","NewLotCount","Reason","ChangedBy","Timestamp","NewTotalAmount","TargetProductName","TargetTaskName"],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+ChangeLogs_Form
+View name
+ChangeLogs_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":null,"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+ChangeLogs_Inline
+View name
+ChangeLogs_Inline
+Created by
+System
+View type
+table
+Position
+ref
+View configuration
+{"ColumnWidth":"Default","EnableQuickEdit":false,"ColumnOrder":[],"GroupBy":[],"GroupAggregate":"NONE","SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[{"EventType":"Row Selected","EventAction":"**auto**"}],"Icon":"fa-table","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+DailyChartData_Detail
+View name
+DailyChartData_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+DailyChartData_Form
+View name
+DailyChartData_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":null,"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Products_Detail
+View name
+Products_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Products_Form
+View name
+Products_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":["ProductId","ProductName","Category","TaskName","LotUnit","RequiredTime","StdLotSize","StdUnitType","StorageLocation","DefaultTimeSlot"],"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+RequestGroups_Detail
+View name
+RequestGroups_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+RequestGroups_Form
+View name
+RequestGroups_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":null,"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+RequestGroups_Inline
+View name
+RequestGroups_Inline
+Created by
+System
+View type
+table
+Position
+ref
+View configuration
+{"ColumnWidth":"Default","EnableQuickEdit":false,"ColumnOrder":[],"GroupBy":[],"GroupAggregate":"NONE","SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[{"EventType":"Row Selected","EventAction":"**auto**"}],"Icon":"fa-table","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Requests_Detail
+View name
+Requests_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":["TargetDate","RequestId","GroupId","ProductId","LotCount","LotSize","UnitType","Status","Requester","CreatedAt","Approver","ApprovedAt","ReturnReason","Timeslot","OverrideTime","Reason","TaskName","TotalAmount","EstTime","ProductName","CalendarLabel","StatusColor","EstTimeMorning","EstTimeDay","ProdCalendarLabel","DateAndSlot","EstTotalMorning","EstTotalDay","Related ChangeLogs"],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Requests_Form
+View name
+Requests_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":["TaskName","TargetDate","LotCount","TotalAmount","UnitType","EstTime","OverrideTime","Reason"],"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Requests_Inline
+View name
+Requests_Inline
+Created by
+System
+View type
+table
+Position
+ref
+View configuration
+{"ColumnWidth":"Default","EnableQuickEdit":false,"ColumnOrder":["TargetDate","LotCount","LotSize","UnitType","EstTime"],"GroupBy":[],"GroupAggregate":"NONE","SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[{"EventType":"Row Selected","EventAction":"**auto**"}],"Icon":"fa-table","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Requests_早朝_Detail
+View name
+Requests_早朝_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Requests_早朝_Form
+View name
+Requests_早朝_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":null,"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Requests_昼間_Detail
+View name
+Requests_昼間_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Requests_昼間_Form
+View name
+Requests_昼間_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":null,"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Tasks_To_Approve_Detail
+View name
+Tasks_To_Approve_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Tasks_To_Approve_Form
+View name
+Tasks_To_Approve_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":null,"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Tasks_To_Approve_早朝_Detail
+View name
+Tasks_To_Approve_早朝_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Tasks_To_Approve_早朝_Form
+View name
+Tasks_To_Approve_早朝_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":null,"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Tasks_To_Approve_昼間_Detail
+View name
+Tasks_To_Approve_昼間_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Tasks_To_Approve_昼間_Form
+View name
+Tasks_To_Approve_昼間_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":null,"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Users_Detail
+View name
+Users_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+Users_Form
+View name
+Users_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":["**all other columns**","Email","FullName","Department","Role"],"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+新規依頼
+View name
+新規依頼
+Created by
+App owner
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":["ProductId","DisplayTimeSlot","CreatedBy","Memo","Related Requests"],"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+早朝カレンダー
+View name
+早朝カレンダー
+Created by
+App owner
+View type
+calendar
+ActionType
+Month
+Position
+ref
+View configuration
+{"StartDateColumn":"TargetDate","StartTimeColumn":"**none**","EndDateColumn":"TargetDate","EndTimeColumn":"**none**","LabelColumn":"CalendarLabel","CategoryColumn":"StatusColor","DefaultCalendarView":"Month","ColumnOrder":[],"GroupBy":[],"GroupAggregate":"NONE","SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+早朝稼働グラフ
+View name
+早朝稼働グラフ
+Created by
+App owner
+View type
+chart
+ActionType
+Histogram
+Position
+ref
+View configuration
+{"ChartType":"Histogram","UseNewChartExperience":false,"ChartConfig":null,"ChartColumns":["TargetDate","EstTime"],"GroupAggregate":"SUM :: EstTime","TrendLine":"None","ChartColors":["themeMainColor"],"LabelType":"Percent","ShowLegend":true,"SortBy":[{"Column":"TargetDate","Order":"Ascending"}],"Events":[],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+昼間カレンダー
+View name
+昼間カレンダー
+Created by
+App owner
+View type
+calendar
+ActionType
+Month
+Position
+ref
+View configuration
+{"StartDateColumn":"TargetDate","StartTimeColumn":"**none**","EndDateColumn":"TargetDate","EndTimeColumn":"**none**","LabelColumn":"CalendarLabel","CategoryColumn":"StatusColor","DefaultCalendarView":"Month","ColumnOrder":[],"GroupBy":[],"GroupAggregate":"NONE","SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+昼間稼働グラフ
+View name
+昼間稼働グラフ
+Created by
+App owner
+View type
+chart
+ActionType
+Histogram
+Position
+ref
+View configuration
+{"ChartType":"Histogram","UseNewChartExperience":false,"ChartConfig":null,"ChartColumns":["TargetDate","EstTime"],"GroupAggregate":"SUM :: EstTime","TrendLine":"None","ChartColors":["themeMainColor"],"LabelType":"Percent","ShowLegend":true,"SortBy":[{"Column":"TargetDate","Order":"Ascending"}],"Events":[],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+生産管理カレンダー
+View name
+生産管理カレンダー
+Created by
+App owner
+View type
+calendar
+ActionType
+Month
+Position
+ref
+View configuration
+{"StartDateColumn":"TargetDate","StartTimeColumn":"**none**","EndDateColumn":"TargetDate","EndTimeColumn":"**none**","LabelColumn":"ProdCalendarLabel","CategoryColumn":"StatusColor","DefaultCalendarView":"Month","ColumnOrder":[],"GroupBy":[],"GroupAggregate":"NONE","SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+米飯課カレンダー
+View name
+米飯課カレンダー
+Created by
+App owner
+View type
+calendar
+ActionType
+Month
+Position
+ref
+View configuration
+{"StartDateColumn":"TargetDate","StartTimeColumn":"**none**","EndDateColumn":"TargetDate","EndTimeColumn":"**none**","LabelColumn":"CalendarLabel","CategoryColumn":"StatusColor","DefaultCalendarView":"Month","ColumnOrder":[],"GroupBy":[],"GroupAggregate":"NONE","SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+米飯課ダッシュボード
+View name
+米飯課ダッシュボード
+Created by
+App owner
+View type
+dashboard
+Position
+ref
+View configuration
+{"ViewEntries":[{"ViewName":"米飯課カレンダー","ViewSize":"Large"},{"ViewName":"4日後承認","ViewSize":"Large"},{"ViewName":"早朝カレンダー","ViewSize":"Large"},{"ViewName":"昼間カレンダー","ViewSize":"Large"}],"InteractiveMode":true,"ShowTabs":false,"Events":[],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+米飯課フォーム用データ_Detail
+View name
+米飯課フォーム用データ_Detail
+Created by
+System
+View type
+detail
+ActionType
+Automatic
+Position
+ref
+View configuration
+{"MainSlideshowImageColumn":"**auto**","DetailContentColumn":"**none**","HeaderColumns":[],"QuickEditColumns":[],"ColumnOrder":[],"ImageStyle":"Fill","Layout":null,"UseCardLayout":false,"DisplayMode":"Automatic","MaxNestedRows":5,"SlideshowMode":true,"DesktopSplitMode":"Split view","UseDesktopMultiColumn":true,"SortBy":[],"PrimarySortColumn":null,"IsPrimarySortDescending":false,"Events":[],"Icon":"fa-indent","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+米飯課フォーム用データ_Form
+View name
+米飯課フォーム用データ_Form
+Created by
+System
+View type
+form
+Position
+ref
+View configuration
+{"ColumnOrder":null,"AutoSave":false,"AutoReopen":false,"FinishView":"**Automatic**","RowKey":"","FormStyle":"Automatic","PageStyle":"Automatic","FormFooterStyle":"Bottom","MaxNestedRows":5,"AudioInput":false,"Events":[{"EventType":"Form Saved","EventAction":"**auto**"}],"Icon":"fa-edit","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+View name
+統合稼働グラフ（分）
+View name
+統合稼働グラフ（分）
+Created by
+App owner
+View type
+chart
+ActionType
+Col Series
+Position
+ref
+View configuration
+{"ChartType":"Col Series","UseNewChartExperience":false,"ChartConfig":null,"ChartColumns":["EstTotalMorning","EstTotalDay"],"GroupAggregate":"SUM :: EstTime","TrendLine":"None","ChartColors":["themeMainColor"],"LabelType":"Percent","ShowLegend":true,"SortBy":[{"Column":"TargetDate","Order":"Ascending"}],"Events":[],"Icon":"fa-list-ul","IconRunnerUps":null,"MenuOrder":1}
+Visible?
+ALWAYS
+Icon
+Menu order
+1
+Format Rules
+Collapse
+Rule name
+Color_Approved
+Rule name
+Color_Approved
+Format these columns and actions
+RequestId
+CalendarLabel
+For this data
+Requests
+If this condition is true
+=[Status] = "確定"
+Rule order
+1
+Is this format rule disabled?
+No
+Like this
+{"textColor":"","highlightColor":"green","textSize":1.0,"underline":false,"strikethrough":false,"bold":false,"italic":false,"uppercase":false,"icon":null,"imageSize":null}
+Visible?
+ALWAYS
+Rule name
+Color_Draft
+Rule name
+Color_Draft
+Format these columns and actions
+RequestId
+CalendarLabel
+For this data
+Requests
+If this condition is true
+=[Status] = "依頼中"
+Rule order
+1
+Is this format rule disabled?
+No
+Like this
+{"textColor":null,"highlightColor":"yellow","textSize":1.0,"underline":false,"strikethrough":false,"bold":false,"italic":false,"uppercase":false,"icon":null,"imageSize":null}
+Visible?
+ALWAYS
+Rule name
+Color_Adjustment
+Rule name
+Color_Adjustment
+Format these columns and actions
+RequestId
+Status
+CalendarLabel
+For this data
+Requests
+If this condition is true
+=[Status] = "差し戻し"
+Rule order
+1
+Is this format rule disabled?
+No
+Like this
+{"textColor":null,"highlightColor":"red","textSize":1.0,"underline":false,"strikethrough":false,"bold":false,"italic":false,"uppercase":false,"icon":null,"imageSize":null}
+Visible?
+ALWAYS
+Rule name
+Color_Special_Order
+Rule name
+Color_Special_Order
+Format these columns and actions
+RequestId
+CalendarLabel
+For this data
+Requests
+If this condition is true
+=[Status] = "米飯課予定"
+Rule order
+1
+Is this format rule disabled?
+No
+Like this
+{"textColor":null,"highlightColor":"purple","textSize":1.0,"underline":false,"strikethrough":false,"bold":false,"italic":false,"uppercase":false,"icon":null,"imageSize":null}
+Visible?
+ALWAYS
+Rule name
+New Format Rule
+Rule name
+New Format Rule
+Format these columns and actions
+TargetDate
+For this data
+Requests
+Rule order
+1
+Is this format rule disabled?
+No
+Like this
+{"textColor":null,"highlightColor":null,"textSize":1.0,"underline":false,"strikethrough":false,"bold":false,"italic":false,"uppercase":false,"icon":null,"imageSize":null}
+Visible?
+ALWAYS
+Behavior
+Collapse
+Actions
+Collapse
+Action name
+Delete
+Action name
+Delete
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+Yes
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"InputParametersUsed":null,"Prominence":"Display_Prominently","NeedsConfirmation":true,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+DELETE_RECORD
+Only if this condition is true
+=AND(
+  [Status] <> "確定",
+  IN(LOOKUP(USEREMAIL(), "Users", "Email", "Role"), {"生産管理", "Admin"}),
+  [TargetDate] > (TODAY() + 4)
+)
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+Visible?
+ADVANCED
+Action name
+Add
+Action name
+Add
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+ADD_RECORD
+Only if this condition is true
+=CONTEXT("ViewType") = "Form"
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+Yes
+Visible?
+ALWAYS
+Action name
+View Ref (GroupId)
+Action name
+View Ref (GroupId)
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Inline
+Action order
+1
+With these properties
+{"NavigateTarget":"CONCATENATE(\"#page=detail&table=RequestGroups&row=\", ENCODEURL([GroupId]) )","Prominence":"Display_Inline","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Attach to column
+GroupId
+Set this column
+GroupId
+Only if this condition is true
+NOT(ISBLANK([GroupId]))
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Delete
+Action name
+Delete
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+Yes
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"InputParametersUsed":null,"Prominence":"Display_Prominently","NeedsConfirmation":true,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+DELETE_RECORD
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Products
+Does this action apply to the whole table?
+No
+Visible?
+ADVANCED
+Action name
+Edit
+Action name
+Edit
+Bulk action?
+No
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"DesktopBehavior":"Open a form","DesktopEditBehavior":"Edit in place","Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":false}
+Do this
+EDIT_RECORD
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Products
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Add
+Action name
+Add
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+ADD_RECORD
+Disable automatic updates?
+No
+Display name
+マスタ追加
+Action icon
+For a record of this table
+Products
+Does this action apply to the whole table?
+Yes
+Visible?
+ALWAYS
+Action name
+Delete
+Action name
+Delete
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+Yes
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"InputParametersUsed":null,"Prominence":"Display_Prominently","NeedsConfirmation":true,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+DELETE_RECORD
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+RequestGroups
+Does this action apply to the whole table?
+No
+Visible?
+ADVANCED
+Action name
+Edit
+Action name
+Edit
+Bulk action?
+No
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"DesktopBehavior":"Open a form","DesktopEditBehavior":"Edit in place","Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":false}
+Do this
+EDIT_RECORD
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+RequestGroups
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Add
+Action name
+Add
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+ADD_RECORD
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+RequestGroups
+Does this action apply to the whole table?
+Yes
+Visible?
+ALWAYS
+Action name
+Delete
+Action name
+Delete
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+Yes
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"InputParametersUsed":null,"Prominence":"Display_Prominently","NeedsConfirmation":true,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+DELETE_RECORD
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Users
+Does this action apply to the whole table?
+No
+Visible?
+ADVANCED
+Action name
+Edit
+Action name
+Edit
+Bulk action?
+No
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"DesktopBehavior":"Open a form","DesktopEditBehavior":"Edit in place","Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":false}
+Do this
+EDIT_RECORD
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Users
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Compose Email (Email)
+Action name
+Compose Email (Email)
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Inline
+Action order
+1
+With these properties
+{"EmailTo":"[Email]","Subject":null,"Body":null,"Prominence":"Display_Inline","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+EMAIL
+Attach to column
+Email
+Set this column
+Email
+Only if this condition is true
+NOT(ISBLANK([Email]))
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Users
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+View Ref (ProductId)
+Action name
+View Ref (ProductId)
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Inline
+Action order
+1
+With these properties
+{"NavigateTarget":"CONCATENATE(\"#page=detail&table=Products&row=\", ENCODEURL([ProductId]) )","Prominence":"Display_Inline","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Attach to column
+ProductId
+Set this column
+ProductId
+Only if this condition is true
+NOT(ISBLANK([ProductId]))
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+RequestGroups
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Add
+Action name
+Add
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+ADD_RECORD
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Users
+Does this action apply to the whole table?
+Yes
+Visible?
+ALWAYS
+Action name
+View Ref (ProductId)
+Action name
+View Ref (ProductId)
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Inline
+Action order
+1
+With these properties
+{"NavigateTarget":"CONCATENATE(\"#page=detail&table=Products&row=\", ENCODEURL([ProductId]) )","Prominence":"Display_Inline","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Attach to column
+ProductId
+Set this column
+ProductId
+Only if this condition is true
+NOT(ISBLANK([ProductId]))
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+View Ref (Approver)
+Action name
+View Ref (Approver)
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Inline
+Action order
+1
+With these properties
+{"NavigateTarget":"CONCATENATE(\"#page=detail&table=Users&row=\", ENCODEURL([Approver]) )","Prominence":"Display_Inline","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Attach to column
+Approver
+Set this column
+Approver
+Only if this condition is true
+NOT(ISBLANK([Approver]))
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Approve
+Action name
+Approve
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"Assignments":[{"ColumnToEdit":"Status","NewColumnValue":"=\"確定\""},{"ColumnToEdit":"Approver","NewColumnValue":"=USEREMAIL()"},{"ColumnToEdit":"ApprovedAt","NewColumnValue":"=NOW()"}],"ColumnToEdit":"Status","NewColumnValue":"=\"確定\"","InputParametersUsed":null,"Prominence":"Display_Prominently","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+SET_COLUMN_VALUE
+Attach to column
+Status
+Set this column
+Status
+Only if this condition is true
+=AND([Status] = "依頼中", [TargetDate] <= (TODAY() + 4))
+Disable automatic updates?
+No
+Display name
+確定
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+To this value
+="確定"
+Visible?
+ALWAYS
+Action name
+差し戻し
+Action name
+差し戻し
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"Assignments":[{"ColumnToEdit":"Status","NewColumnValue":"=\"差し戻し\""},{"ColumnToEdit":"ReturnReason","NewColumnValue":"=[_INPUT].[Reason]"}],"ColumnToEdit":"Status","NewColumnValue":"=\"差し戻し\"","InputParametersUsed":null,"Prominence":"Display_Prominently","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+SET_COLUMN_VALUE
+Attach to column
+Status
+Set this column
+Status
+Only if this condition is true
+=FALSE
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+To this value
+="差し戻し"
+Visible?
+ALWAYS
+Action name
+Chart Data for 昼間稼働グラフ
+Action name
+Chart Data for 昼間稼働グラフ
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"NavigateTarget":"=\"#page=fastTable&table=Requests_%E6%98%BC%E9%96%93\"","Prominence":"Display_Prominently","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Only if this condition is true
+=CONTEXT("View") = "昼間稼働グラフ"
+Disable automatic updates?
+No
+Display name
+Data
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+Yes
+Visible?
+ALWAYS
+Action name
+Chart Data for 早朝稼働グラフ
+Action name
+Chart Data for 早朝稼働グラフ
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"NavigateTarget":"=\"#page=fastTable&table=Requests_%E6%97%A9%E6%9C%9D\"","Prominence":"Display_Prominently","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Only if this condition is true
+=CONTEXT("View") = "早朝稼働グラフ"
+Disable automatic updates?
+No
+Display name
+Data
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+Yes
+Visible?
+ALWAYS
+Action name
+Edit
+Action name
+Edit
+Bulk action?
+No
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"DesktopBehavior":"Open a form","DesktopEditBehavior":"Edit in place","Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":false}
+Do this
+EDIT_RECORD
+Only if this condition is true
+=FALSE
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+新規依頼
+Action name
+新規依頼
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"NavigateTarget":"=LINKTOVIEW(\"新規依頼\")","Prominence":"Display_Prominently","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Only if this condition is true
+=CONTEXT("View") = "生産管理ダッシュボード"
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Delete
+Action name
+Delete
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+Yes
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"InputParametersUsed":null,"Prominence":"Display_Prominently","NeedsConfirmation":true,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+DELETE_RECORD
+Only if this condition is true
+=FALSE
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+ChangeLogs
+Does this action apply to the whole table?
+No
+Visible?
+ADVANCED
+Action name
+Edit
+Action name
+Edit
+Bulk action?
+No
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"DesktopBehavior":"Open a form","DesktopEditBehavior":"Edit in place","Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":false}
+Do this
+EDIT_RECORD
+Only if this condition is true
+=FALSE
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+ChangeLogs
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Add
+Action name
+Add
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Display_Overlay
+Action order
+1
+With these properties
+{"Prominence":"Display_Overlay","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+ADD_RECORD
+Only if this condition is true
+=FALSE
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+ChangeLogs
+Does this action apply to the whole table?
+Yes
+Visible?
+ALWAYS
+Action name
+管理者日程調整
+Action name
+管理者日程調整
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"NavigateTarget":"=LINKTOFORM(\"ChangeLogs_Form\", \n  \"RequestId\", [_THISROW].[RequestId], \n  \"NewDate\", [_THISROW].[TargetDate], \n  \"NewLotCount\", [_THISROW].[LotCount]\n)","Prominence":"Display_Prominently","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Attach to column
+RequestId
+Only if this condition is true
+=AND([Status]="確定", IN(CONTEXT("View"), {"生産管理ダッシュボード", "Requests_Detail"}))
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+View Ref (RequestId)
+Action name
+View Ref (RequestId)
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Inline
+Action order
+1
+With these properties
+{"NavigateTarget":"CONCATENATE(\"#page=detail&table=Requests&row=\", ENCODEURL([RequestId]) )","Prominence":"Display_Inline","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Attach to column
+RequestId
+Set this column
+RequestId
+Only if this condition is true
+NOT(ISBLANK([RequestId]))
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+ChangeLogs
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Update from ChangeLog
+Action name
+Update from ChangeLog
+Bulk action?
+Yes
+Modifies data?
+Yes
+Needs confirmation?
+No
+Prominence
+Do_Not_Display
+Action order
+1
+With these properties
+{"Assignments":[{"ColumnToEdit":"TargetDate","NewColumnValue":"=LOOKUP(MAXROW(\"ChangeLogs\", \"_ROWNUMBER\", [RequestId] = [_THISROW].[RequestId]), \"ChangeLogs\", \"LogId\", \"NewDate\")"},{"ColumnToEdit":"LotCount","NewColumnValue":"=LOOKUP(MAXROW(\"ChangeLogs\", \"_ROWNUMBER\", [RequestId] = [_THISROW].[RequestId]), \"ChangeLogs\", \"LogId\", \"NewLotCount\")"},{"ColumnToEdit":"Status","NewColumnValue":"=\"確定\""}],"ColumnToEdit":"TargetDate","NewColumnValue":"=LOOKUP(MAXROW(\"ChangeLogs\", \"_ROWNUMBER\", [RequestId] = [_THISROW].[RequestId]), \"ChangeLogs\", \"LogId\", \"NewDate\")","InputParametersUsed":null,"Prominence":"Do_Not_Display","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":true,"BulkApplicable":true}
+Do this
+SET_COLUMN_VALUE
+Attach to column
+TargetDate
+Set this column
+TargetDate
+Only if this condition is true
+true
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+To this value
+=LOOKUP(MAXROW("ChangeLogs", "_ROWNUMBER", [RequestId] = [_THISROW].[RequestId]), "ChangeLogs", "LogId", "NewDate")
+Visible?
+ALWAYS
+Action name
+New step Action - 1
+Action name
+New step Action - 1
+Bulk action?
+Yes
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"ReferencedTable":"Requests","ReferencedRows":"=LIST([RequestId])","ReferencedAction":"Update from ChangeLog","InputAssignments":[],"InputParametersUsed":null,"Prominence":"Display_Prominently","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":true}
+Do this
+REF_ACTION
+Only if this condition is true
+true
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+ChangeLogs
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+予定登録追加
+Action name
+予定登録追加
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"NavigateTarget":"=LINKTOVIEW(\"米飯課予定登録\")","Prominence":"Display_Prominently","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Only if this condition is true
+=IN(CONTEXT("View"), {"昼間ダッシュボード", "早朝ダッシュボード"})
+Disable automatic updates?
+No
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+No
+Visible?
+ALWAYS
+Action name
+Chart Data for 統合稼働グラフ（分）
+Action name
+Chart Data for 統合稼働グラフ（分）
+Bulk action?
+No
+Modifies data?
+No
+Needs confirmation?
+No
+Prominence
+Display_Prominently
+Action order
+1
+With these properties
+{"NavigateTarget":"=\"#page=fastTable&table=DailyChartData\"","Prominence":"Display_Prominently","NeedsConfirmation":false,"ConfirmationMessage":"","ModifiesData":false,"BulkApplicable":false}
+Do this
+NAVIGATE_APP
+Only if this condition is true
+=CONTEXT("View") = "統合稼働グラフ（分）"
+Disable automatic updates?
+No
+Display name
+Data
+Action icon
+For a record of this table
+Requests
+Does this action apply to the whole table?
+Yes
+Visible?
+ALWAYS
+Print or Save as PDF
+X
+Delete my account
+We're sorry to see you go! Why are you leaving?
+It's too hard to figure out
+It doesn't do what I need it to do
+I was just browsing
+Other
+Please tell us what we should improve
+Deletion of this account will not delete the apps or app data already downloaded to app users' devices.
+Delete my account
+Google
+About Google
+Google products
+Privacy
+Terms
+Manage cookies
+$(function () {
+            initializeDeleteAccountModal()
+        })
+$(function () {
+    var shouldCheck = true;
+    if (shouldCheck)
+    {
+        var oneHour = 60 * 60 * 1000;
+        initCheckAccountStatus(oneHour);
+    }
+});
+$(function() {
+      var datenow = (new Date()).toLocaleString();
+      $('#generatedDate').text(datenow);
+      $('.sectionButton').on('click', function() {
+        var button = $(this);
+        var section = button.data('section');
+        button.toggleClass('selected');
+
+        var show = button.hasClass('selected');
+        if (show) {
+          button.textContent = "Collapse ";
+          const chevron = document.createElement('i');
+          chevron.setAttribute('class', 'fa fa-chevron-up');
+          button.appendChild(chevron);
+        } else {
+          button.textContent = "Expand ";
+          const chevron = document.createElement('i');
+          chevron.setAttribute('class', 'fa fa-chevron-down');
+          button.appendChild(chevron);
+        }
+
+        button.parent().parent().toggleClass('hidePrint');
+        $('.' + section).toggleClass('hidden');
+      });
+
+      $('.printButton').on('click',
+        function() {
+          window.print();
+        });
+    });
+window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    function glueCookieNotificationBarLoaded() {
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});
+      var firstScript=d.getElementsByTagName(s)[0], dl=l!='dataLayer'?'&l='+l:'';
+      var script = d.createElement(s);
+      script.async = true;
+      var url = 'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      if (self.trustedTypes && self.trustedTypes.createPolicy) {
+        var policy = self.trustedTypes.createPolicy('gtm-load-fix', {
+          createScriptURL: function(_ignored) {
+            return url;
+          }
+        });
+        script.src = policy.createScriptURL('_ignored');
+      } else {
+        script.src = url;
+      }
+      firstScript.parentNode.insertBefore(script, firstScript);
+      })(window,document,'script','dataLayer','GTM-MXWLX3PF');
+    }
+document.addEventListener("DOMContentLoaded", function() {
+          new window.glue.CookieNotificationBar(document.getElementById('cookieConsentContainer'), {
+            category: window.glue.CookieNotificationBar.category.TWO_A,
+            siteId: "www.appsheet.com",
+            language: 'en',
+          });
+        });
+www.appsheet.com uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see.
+Learn more
+.
+Agree
+No thanks
+[contenteditable="true"].single_line {
+        white-space: nowrap;
+        overflow: hidden;
+    } 
+    [contenteditable="true"].single_line br {
+        display:none;
+    
+    }
+    [contenteditable="true"].single_line * {
+        display:inline;
+        white-space:nowrap;
+    }
+    .CodeMirror {
+        height: calc(100% - 20px);
+        float: right;
+    }
+    .CodeMirror-scroll {
+        min-height: 100px;
+    }
+    .ExpressionField {
+        flex-grow: 1;
+    }
+    div:has(+ .ExpressionTextAfterParse) {
+        margin-bottom: 20px;
+    }
+    html .react-root .ExpressionControlModal .Test {
+        margin-left: 8px;
+        width: auto;
+        height: 30px;
+        float: right;
+    }
+    html .react-root .ExpressionControlModal .Examples {
+        /*overflow: hidden; remove this and hid tab bar instead*/
+        flex-grow: 0;
+        margin-top: 0px;
+    }
+    html .react-root .ExpressionControlModal .Examples .TabRow {
+        height: 44px;
+    }
+    html .react-root .ExpressionControlModal.examples_collapsed .Examples {
+        display: none;
+        height: 0px;
+    }
+    .expand_or_collapse_button {
+        float: left;
+    }
+    .examples_collapsed .expand_or_collapse_button {
+        content: "Show";
+    }
+    .CodeMirror__snippet_copy_button {
+        /*float: right;
+        border-radius: 2px;
+        display: inline-block;
+        padding: 3px 7px 3px 7px;
+        margin: 3px 0px 0px 3px;
+        cursor: pointer;
+        background: #F8F9FA;
+        border: 1px solid #aaa;*/
+    }
+    .extension_clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+    .pullout {
+        display: flex;
+        box-sizing: border-box;
+        flex-direction: column;
+        justify-content: center;
+        align-content: stretch;
+        background: #F8F9FA;
+        position: fixed;
+        top: 0px;
+        width: 350px;
+        height: 100vh;
+        z-index: 9007199254740991;
+        transition: transform 300ms;
+        left: 100vw;
+    }
+    .pullout--open {
+        transform: translateX(-350px);
+        box-shadow: -2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .pullout--closed {
+    }
+    .pullout__tab {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        align-items: center;
+        background: #F8F9FA;
+        border: 1px solid #e8eaed;
+        border-right-style: none;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        position: fixed;
+        top: 63px;
+        width: 40px;
+        height: 35px;
+        z-index: 9007199254740990;
+        left: calc(100vw - 40px);
+        transition: transform 300ms;
+    }
+
+    .pullout__tab__logo {
+        text-align: center;
+    }
+    .pullout__tab__logo i {
+        font-size: 24px;
+    }
+    .pullout__tab--open {
+        transform: translate(-350px, -60px);
+        box-shadow: -2px 4px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+    .pullout__tab--closed {
+    }
+    .pullout__top_banner {
+        padding: 7px;
+        margin: 0px;
+        display: none;
+        justify-content: center;
+        background: #F8F9FA;
+        height: 8%;
+        width: 100%;
+    }
+    @media (max-height: 850px) {
+        .pullout__top_banner {
+            display: none;
+        }
+    }
+    .pullout__top_banner__left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+     }
+    .pullout__top_banner__left__words {
+        margin: 0 0 0 20px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .pullout__top_banner__right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        padding 0 5px 0 0;
+    }
+    .pullout__tabs {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 5%;
+    }
+    .pullout__tabs .tabs {
+        display: flex;
+        overflow-x: scroll;
+    }
+    .pullout__tabs .tabs::after {
+        content: '';
+        padding: 0.5em;
+    }
+    .pullout__tabs__tab {
+        cursor: pointer;
+        margin-left: 13px;
+        font-size: 15px;
+    }
+    @media (max-height: 850px) {
+        .pullout__tabs__tab {
+            font-size: 14px;
+            margin-left: 13px;
+        }
+    }
+    .pullout__tabs__tab--active {
+        color: #1a73e8;
+        font-weight: bold;
+    }
+    .pullout__tabs__tab--inactive {
+        color: rgb(130, 130, 130);
+    }
+    .pullout__tabs__qrew_logo {
+        display: block;
+        width: 75px;
+        margin-left: auto;
+        padding-right: 5%;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .pullout__tabs a {
+        display: block;
+        height: 100%;
+        margin-left: auto;
+    }   
+    .tabs::-webkit-scrollbar {
+        width: 0px;  
+        height: 0px;
+        background: transparent; 
+    }
+    .qrew_tools_logo_block {
+
+    }
+    .qrew_tools_logo_block__text {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: right;
+        position: relative;
+        top: -7px;
+        margin-right: 10px;
+    }
+    .pullout__bottom_banner {
+        padding: 0px;
+        margin: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: stretch;
+        background: #F8F9FA;
+        height: 55px;
+        width: 100%;
+        min-height:50px
+    }
+    @media (max-height: 850px) {
+        .pullout__bottom_banner {
+            display: none;
+        }
+    }
+    .pullout__content_frame {
+        padding: 0px;
+        margin: 0px;
+        height: 90%;
+        display: block;
+    }
+    @media (max-height: 850px) {
+        .pullout__content_frame {
+            height: 95%;
+        }
+    }
+    .pullout__content_frame__content {
+        width: 100%;
+        height: 100%;
+    }
+    .pullout__content_frame__content--active {
+        display: block;
+    }
+    .pullout__content_frame__content--inactive {
+        display: none;
+    }
+    .pullout__content_frame__content__help {
+
+    }
+    .pullout__content_frame__content__schema {
+        height: 100%;
+        width: 100%;
+        overflow: scroll;
+    }
+    .pullout__content_frame__content__account {
+        height: 100%;
+        width: 100%;
+        overflow: scroll;
+    }
+    .pullout__content_frame__content__account .account_margin_container, 
+    .pullout__content_frame__content__snippets .account_margin_container {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15px;
+    }
+    .pullout__content_frame__content__account input {
+        width: 250px;
+        height: 40px;
+        margin: 5px 0;
+        display: flex;
+    }    
+    .pullout__content_frame__content__account input[type="submit"] {
+        margin: 5px 0;
+        display: flex;
+    }      
+    .pullout__content_frame__content__account input[type="button"] {
+        padding-left: 15px;
+        padding-right: 15px;
+        width: auto;
+    }  
+    .pullout__content_frame__content__views {
+        height: 100%;
+        width: 100%;
+        overflow: scroll;
+    }
+    .pullout__content_frame__content__views .views_margin_container {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15px;
+    }
+    .pullout__content_frame__content__views .view {
+        margin-top: 5px;
+        display: flex;
+    }
+    .pullout__content_frame__content__views .attribute_spacing_wrapper {
+        display: flex;
+        width: 100%;
+        align items: center;
+        justify-content: space-between;
+    }
+    .pullout__content_frame__content__schema .schema_margin_container {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 85px;
+    }
+    .pullout__content_frame__content__schema .schema_recover_container {
+        background-color: rgb(244, 166, 64);
+        color: white;
+        position: fixed;
+        z-index: 1;
+        bottom: 50px;
+        width: 100%;
+        padding-left: 17.5px;
+        padding-right: 17.5px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    @media (max-height: 850px) {
+        .pullout__content_frame__content__schema .schema_recover_container {
+            bottom: 0px;
+        }
+    }    
+    .pullout__content_frame__content__schema .schema {
+        margin-top: 20px;
+    }
+    .pullout__content_frame__content__schema .schema_name {
+        font-size: 16px;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+    }
+    .pullout__content_frame__content__schema .attribute {
+        margin-top: 5px;
+        display: flex;
+    }
+    .pullout__content_frame__content__schema .attribute_spacing_wrapper {
+        display: flex;
+        width: 100%;
+        align items: center;
+        justify-content: space-between;
+    }
+    .pullout__content_frame__content__schema .attribute_name,
+    .pullout__content_frame__content__views .attribute_name {
+        display: inline-block;
+        width: 100px;
+    }
+    .pullout__content_frame__content__schema .attribute_type,
+    .pullout__content_frame__content__views .attribute_type {
+        font-style: italic;
+        display: inline-block;
+    }
+    .pullout__content_frame__content__schema button,
+    .pullout__content_frame__content__views button {
+        width: 30px;
+        cursor: pointer;
+        padding: 5px;
+        border: 0px solid transparent;
+        border-radius: 5px;
+        box-shadow: none;
+        background-color: transparent;
+        color: rgb(130, 130, 130);
+    }
+    .schema_name_text {
+
+    }
+    .schema_name_copy_button {
+        float: right;
+        padding: 2px;
+        margin-bottom: 5px;
+        margin-right: 3px;
+    }
+    .schema_name_insert_button {
+        float: right;
+        padding: 2px;
+        margin-bottom: 5px;
+    }
+    .pullout__content_frame__content__schema button[data-action="resizeSchema"] {
+        background: transparent;
+        color: black;
+        box-shadow: none;
+    }
+    .pullout__content_frame__content__schema button[data-action="resizeSchema"]:hover {
+        background: transparent;
+        color: black;
+    }
+    .schema.expanded .schema_resize_button:before {
+        content: "\f077";
+    }
+    .schema.collapsed .schema_resize_button:before {
+        content: "\f078";
+    }
+    .schema.collapsed .attributes_group {
+        display: none;
+    }
+    .schema.expanded .attributes_group {
+        display: block;
+    }
+    .pullout__content_frame__content__schema .copy_button,
+    .pullout__content_frame__content__views .copy_button {
+        margin-right: 5px;
+        padding: 5px;
+        border: 0px solid transparent;
+        border-radius: 5px;
+        box-shadow: none;
+        background-color: transparent;
+        color: rgb(180, 180, 180);
+    }
+    .pullout__content_frame__content__schema .insert_button,
+    .pullout__content_frame__content__views .insert_button {
+        margin-right: 15px;
+        padding: 5px;
+        border: 0px solid transparent;
+        border-radius: 5px;
+        box-shadow: none;
+        background-color: transparent;
+        color: rgb(180, 180, 180);
+    }
+    .pullout__content_frame__content__schema button:hover,
+    .pullout__content_frame__content__views button:hover {
+        /*background-color: #64BBE3;*/
+        color: #EB5181;
+    }
+    .pullout__content_frame__content__schema button:hover~* .attribute_name,
+    .pullout__content_frame__content__views button:hover~* .attribute_name {
+        font-weight: 700;
+    }
+    .pullout__content_frame__content__schema button:hover~* span,
+    .pullout__content_frame__content__views button:hover~* span {
+        text-decoration: underline;
+        text-decoration-color: #64BBE3;
+    }
+    .pullout__content_frame__content__snippets {
+        height: 100%;
+        width: 100%;
+        overflow: scroll;
+    }
+    .pullout__content_frame__content__snippets .snippet {
+        position: relative;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0px 0px 7.76px 0.24px rgba(6, 36, 40, 0.19);
+        width: 90%;
+        height: 175px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .pullout__content_frame__content__snippets .snippet--view_mode {
+
+    }
+    .snippet__create_new_overlay {
+        display: none;
+    }
+    [data-identifier="NEW"] .snippet__create_new_overlay {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.75);
+        /*border: 3px dashed #1a73e8;*/
+        left: 0px;
+        top: 0px;
+        height: 100%;
+        width: 100%;
+        z-index: 9007199254740991;
+    }
+    .snippet__create_new_overlay__plus_button {
+        pointer-events: none;
+        font-size: 102px;
+        color: rgba(255, 255, 255, 0.00);
+    }
+    .snippet__title_area {
+        overflow: hidden;
+        padding-left: 14px;
+        padding-right: 14px;
+        display: flex;
+        align-items: flex-end;
+        font-size: 16px;
+        font-weight: bold;
+        height: 20%;
+    }
+    .snippet__title_area__title {
+        overflow: hidden;
+        width: 100%;
+    }
+    .snippet__title_area__title:focus {
+        outline: 0px solid transparent;
+    }
+    .snippet__content_area {
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 60%;
+    }
+    .snippet__content, .snippet__content:disabled {
+        font-family: monospace;
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+        resize: none;
+        outline: none;
+        padding: 0;
+        margin: 0;
+        overflow: auto;
+        overflow-y: auto;
+    }
+    .snippet__content:disabled {
+        color: #444444;
+    }
+    .snippet__buttons_area {
+        padding-left: 14px;
+        padding-right: 14px;
+        border-top: 1px solid #e8eaed;
+        height: 20%;
+    }
+    .snippet__buttons_area__cluster {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    .snippet__buttons_area__left_cluster {
+        float: left;
+    }
+    .snippet__buttons_area__right_cluster {
+        float: right;
+    }
+    .snippet__buttons_area__button {
+        cursor: pointer;
+        font-size: 12px;
+        display: inline-block;
+    }
+    .snippet__buttons_area__button:hover {
+        color: #EB5181;
+    }
+    .snippet__buttons_area__button__cancel {
+
+    }
+    .snippet__buttons_area__button__save {
+
+    }
+    .snippet__buttons_area__button__trash {
+
+    }
+    .snippet__buttons_area__button__edit {
+
+    }
+    .snippet__buttons_area__button__insert {
+
+    }
+    .snippet--edit_mode .snippet__buttons_area__button__trash,
+    .snippet--edit_mode .snippet__buttons_area__button__edit,
+    .snippet--edit_mode .snippet__buttons_area__button__insert,
+    .snippet--edit_mode .snippet__buttons_area__button__copy {
+        display: none;
+    }
+    .snippet--view_mode .snippet__buttons_area__button__cancel,
+    .snippet--view_mode .snippet__buttons_area__button__save {
+        display: none;
+    }
+    .snippet__buttons_area__left_cluster .snippet__buttons_area__button {
+        margin-right: 15px;
+    }
+    .snippet__buttons_area__right_cluster .snippet__buttons_area__button {
+        margin-left: 15px;
+    }
+    .account_login_note {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .pullout__content_frame__content__account input[type=checkbox] {
+        width: 25px;
+        position: relative;
+        visibility: visible;
+        vertical-align: middle;
+        position: relative;
+        bottom: 1px;
+        display: inline-block;
+        min-height: auto;
+        height: auto;
+        margin-right: 5px;
+    }
+    .pullout__content_frame__content__account p {
+        margin: 14px 0;
+    }
+    .pullout__content_frame__content__account a {
+        border-bottom: 1px dotted #aaa;
+    }
+    .pullout__content_frame__content__account label, .pullout__content_frame__content__account .smaller {
+        font-size: 12px;
+        font-weight: normal;
+    }
+    .account_status {
+        color: #DD0000;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .account_button {
+        margin-top: 15px;
+        margin-right: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: auto;
+        height: auto;
+        display: inline-block;
+        background-color: #1a73e8;
+        color: white;
+        cursor: pointer;
+        padding: 5px;
+        border: 0px solid transparent;
+        border-radius: 5px;
+        box-shadow: none;
+    }
+    .pullout__content_frame__content__snippets .snippet--edit_mode {
+        box-shadow: 0px 0px 7.76px 0.24px rgba(39, 222, 255, 0.55);
+    }
+    .pullout__bottom_banner__box {
+        padding: 0px;
+        margin: 0px;
+        display: flex;
+        justify-content: center;
+    }
+    .pullout__bottom_banner__text {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0px;
+        padding: 12px;
+        border-bottom: 3px solid #EB5181;
+        cursor: pointer;
+    }
+    .qrew_tooltip {
+        cursor: help;
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+        vertical-align: super;
+    }
+    .MuiButtonBase-root.MuiIconButton-root.jss250.MuiIconButton-colorPrimary {
+        visibility: hidden;
+    }
+    .ExpressionInput{
+        display: none;
+    }
+
+    .qrew_tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 5px;
+
+        position: absolute;
+        z-index: 1;
+        bottom: 15px;
+    }
+
+    .qrew_tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+    #recover_myFile {
+        cursor: pointer;
+        display: inline-block;
+    }
+    label[for="recover_myFile"] {
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 5px;
+    }
+    label[for="recover_myFile"]:hover {
+        color: white;
+    }
+    #recover_saveBtn {
+        width: auto;
+        display: inline-block;
+        background-color: #1a73e8;
+        color: white;
+        margin-left: 10px;
+    }
+    #recover_saveBtn[disabled] {
+        cursor: not-allowed;
+        background-color: gray;
+        color: white;
+    }
+    #recover_saveBtn[disabled]:hover {
+        background-color: gray;
+        color: white;
+    }
+Account
+Snippets
+Schema
+Views
+Docs
+AppSheetTraining.com
+Login
+Login with your AppSheetTraining.com (AST) Account to view your saved snippets.
+* By Logging in, Your current Snippets will be migrated to your AST account
+I agree to
+AppSheetTraining.com
+Terms of Service
+and
+Privacy Policy
+AppSheetTraining.com
+Account
+You are logged in.
+LOGOUT
+Connect your QREW Tools Account
+New Snippet
+Snippet contents go here.
+CANCEL
+TRASH
+EDIT
+SAVE
+Recovery Data Tool
+What's this?
+Select Files...
+?
+Upload all recovery files, using Ctrl+Shift to select more than one.
+Process
+AppSheetTraining.com

@@ -1,0 +1,65 @@
+[
+  {
+    "_RowNumber": "2",
+    "UserId": "123456",
+    "Email": "seisankanri.taro@example.com",
+    "FullName": "惣菜太郎",
+    "Department": "生産管理",
+    "Role": "Admin",
+    "Related Requests By Approver": ""
+  },
+  {
+    "_RowNumber": "3",
+    "UserId": "234567",
+    "Email": "beihan.hanako@example.com",
+    "FullName": "米飯花子",
+    "Department": "米飯課",
+    "Role": "Admin",
+    "Related Requests By Approver": ""
+  },
+  {
+    "_RowNumber": "4",
+    "UserId": "345678",
+    "Email": "gemini@chikuya.co.jp",
+    "FullName": "鈴木海広",
+    "Department": "米飯課",
+    "Role": "Admin",
+    "Related Requests By Approver": ""
+  },
+  {
+    "_RowNumber": "5",
+    "UserId": "7be315a9",
+    "Email": "google@chikuya.co.jp",
+    "FullName": "杉田雅紀",
+    "Department": "生産管理",
+    "Role": "Admin",
+    "Related Requests By Approver": ""
+  },
+  {
+    "_RowNumber": "6",
+    "UserId": "908ab60e",
+    "Email": "google@chikuya.co.jp",
+    "FullName": "野末絢子",
+    "Department": "生産管理",
+    "Role": "Admin",
+    "Related Requests By Approver": ""
+  },
+  {
+    "_RowNumber": "7",
+    "UserId": "263fd94e",
+    "Email": "test@chikuya.co.jp",
+    "FullName": "松下義和",
+    "Department": "米飯課",
+    "Role": "User",
+    "Related Requests By Approver": ""
+  },
+  {
+    "_RowNumber": "8",
+    "UserId": "1ee4450d",
+    "Email": "test@chikuya.co.jp",
+    "FullName": "松下義和",
+    "Department": "米飯課",
+    "Role": "User",
+    "Related Requests By Approver": ""
+  }
+]
