@@ -19,18 +19,35 @@
   <script>
     window.$docsify = {
       name: '🍚 米飯課への製造依頼',
-      repo: '', /* Hide the top-right GitHub corner ribbon so it feels like a real app */
-      homepage: 'user_guides/01_user_manual.md', /* Force the root URL to load the iPad manual instantly */
+      repo: '',
+      homepage: 'user_guides/01_user_manual.md',
       loadSidebar: true,
       subMaxLevel: 3,
       auto2top: true,
-      themeColor: '#2b90d9'
+      themeColor: '#2b90d9',
+      markdown: {
+        renderer: {
+          code: function(code, lang) {
+            if (lang === 'mermaid') {
+              return '<div class="mermaid">' + code + '</div>';
+            }
+            return this.origin.code.apply(this, arguments);
+          }
+        }
+      }
     }
   </script>
+  <!-- Mermaid core MUST load before Docsify -->
+  <script src="//cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: false, theme: 'default' });</script>
   <!-- Docsify v4 Core -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- Mermaid Support plugin (crucial for our architecture diagrams) -->
-  <script src="//unpkg.com/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
-  <script>mermaid.initialize({ startOnLoad: true });</script>
+  <script>
+    // Re-render mermaid after each page load
+    window.$docsify.plugins = (window.$docsify.plugins || []).concat(function(hook) {
+      hook.afterEach(function(html) { return html; });
+      hook.doneEach(function() { mermaid.run(); });
+    });
+  </script>
 </body>
 </html>
