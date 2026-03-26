@@ -77,8 +77,7 @@ flowchart TB
     Create --> Draft["依頼中としてカレンダーに登録される"]
     Modify --> CheckStatus{"現在のステータスは？"}
     CheckStatus -- 4日以内の確定済み --> Admin["通常の「削除」は不可。<br>米飯課に連絡を入れて必ず<br>「管理者日程調整」ボタンで<br>理由を入力して更新"]
-    CheckStatus -- 依頼中 --> CheckDays{"対象日までの日数は？"}
-    CheckDays -- 4日以上先 --> Free["変更したい依頼を「削除」し、<br>新規依頼を入れる"]
+    CheckStatus -- 依頼中 --> Free["変更したい依頼を「削除」し、<br>新規依頼を入れる"]
     Admin --> Log["「変更履歴」に証拠ログが保存され、<br>カレンダーの総製造数が自動更新される"]
 ```
 
