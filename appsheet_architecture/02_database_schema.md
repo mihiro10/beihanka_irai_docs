@@ -15,7 +15,7 @@
 | **LotSize** | Number | =ロット内数量 | - | **Initial:** `=[GroupId].[ProductId].[StdLotSize]` |
 | **UnitType** | Enum | =数量種類（単位） | - | **Initial:** `=[ProductId].[StdUnitType]` |
 | **Status** | Enum | =ステータス | - | **Initial:** `=IF(CONTAINS([ProductId].[ProductName], "米飯課予定"), "米飯課予定", "依頼中")` |
-| **Requester** | Enum | =依頼元（作成者） | - | - |
+| **Requester** | Enum | =依頼元（作成者） | - | **Initial:** `=[GroupId].[CreatedBy]` |
 | **CreatedAt** | DateTime | =依頼日時（作成日） | - | **Initial:** `=NOW()` |
 | **Approver** | Ref | =承認者 | - | - |
 | **ApprovedAt** | DateTime | =承認日時 | - | - |
