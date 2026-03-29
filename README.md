@@ -8,6 +8,7 @@
 | 🌐 ブラウザで利用 | https://www.appsheet.com/start/c56be719-393c-4cbe-848c-80edb983b01a |
 | ⚙️ AppSheetエディタ（編集） | https://www.appsheet.com/Template/AppDef?appName=米飯課への製造依頼-22790121&utm_source=share_app_link |
 | 📊 バックエンド（Google Sheets） | https://docs.google.com/spreadsheets/d/1Y-VttYlyHtQnBc_nGMvdN_ugxJ-xlof4-zPzjjBEBdw/edit?usp=sharing |
+| 📖 利用マニュアル（操作手順書） | https://mihiro10.github.io/beihanka_irai_docs/ |
 
 ## 📌 プロジェクトの背景と目的 (Why does this system exist?)
 本システムは、食品製造工場において**「惣菜課（生産管理部門）」と「米飯課（製造現場）」の間で発生していたアナログな課題を解決し、製造依頼を一元管理・可視化するため**に開発されたAppSheetアプリケーションです。
