@@ -12,9 +12,9 @@
 | **ユーザー管理** | table | `=LOOKUP(USEREMAIL(), "Users", "Email", "Role") = "Admin"` | アプリの`Role`や部署を管理する画面。現場のタブレットは共用Emailを使うため、ここで`UserId`を基に疑似ログインを管理する。 |
 | **依頼マスタ** | table | `=IN(LOOKUP(USEREMAIL(), "Users", "Email", "Role"), {"生産管理", "Admin"})` | - |
 | **確定後の変更履歴** | table | `=IN(LOOKUP(USEREMAIL(), "Users", "Email", "Role"), {"米飯課", "Admin"})` | - |
-| **4日後承認** | deck | `-` | 米飯課が毎朝確認する「未確定案件を右スワイプで承認（確定）していく」ためのTinderライクなUI（Deckビュー）。 |
-| **4日後承認早朝** | deck | `-` | - |
-| **4日後承認昼間** | deck | `-` | - |
+| **4日後承認** | deck | `-` | 米飯課が毎朝確認する「未確定案件を右スワイプで承認（確定）していく」ためのTinderライクなUI（Deckビュー）。新設した`Memo`（メモ）をSecondary/Summary列で表示推奨。 |
+| **4日後承認早朝** | deck | `-` | 早朝分の未確定案件Deckビュー。`Memo`列を表示。 |
+| **4日後承認昼間** | deck | `-` | 昼間分の未確定案件Deckビュー。`Memo`列を表示。 |
 | **ChangeLogs_Detail** | detail | `-` | - |
 | **ChangeLogs_Form** | form | `-` | - |
 | **ChangeLogs_Inline** | table | `-` | - |
@@ -28,9 +28,9 @@
 | **Requests_Detail** | detail | `-` | - |
 | **Requests_Form** | form | `-` | - |
 | **Requests_Inline** | table | `-` | - |
-| **Requests_早朝_Detail** | detail | `-` | - |
+| **早朝作業詳細** | detail | `-` | - |
 | **Requests_早朝_Form** | form | `-` | - |
-| **Requests_昼間_Detail** | detail | `-` | - |
+| **昼間作業詳細** | detail | `-` | - |
 | **Requests_昼間_Form** | form | `-` | - |
 | **Tasks_To_Approve_Detail** | detail | `-` | - |
 | **Tasks_To_Approve_Form** | form | `-` | - |

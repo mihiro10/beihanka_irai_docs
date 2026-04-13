@@ -24,7 +24,7 @@
 | **OverrideTime** | Number | =米飯稼働予定時間（分） | - | - |
 | **Reason** | Text | =依頼対応不可の理由 | - | - |
 | **TaskName** | Text | =作業名（表示用） | ✅ | **Formula:** `=[ProductId].[TaskName]` |
-| **TotalAmount** | Number | =総製造数 | ✅ | **Formula:** `=ROUND([LotCount] * [LotSize])` |
+| **TotalAmount** | Decimal | =総製造数 | ✅ | **Formula:** `=IF([UnitType]="kg", [LotCount] * [LotSize], ROUND([LotCount] * [LotSize]))` |
 | **EstTime** | Number | =予想稼働時間（分） | ✅ | **Formula:** `=IF([OverrideTime] > 0, [OverrideTime], ROUND([TotalAmount] * [ProductId].[TimePerUnit]))` |
 | **ProductName** | Text | =品目名（表示用） | ✅ | **Formula:** `=[ProductId].[ProductName]` |
 | **CalendarLabel** | Text | =カレンダー表示用 | ✅ | **Formula:** `=IF([Status] = "米飯課予定", "🚧 " & [Reason] & " (" & [EstTime] & "分)", [ProductId].[TaskName] & " : " & [TotalAmount] & [ProductId].[StdUnitType] & " (" & [EstTime] & "分)")` |
@@ -37,6 +37,7 @@
 | **EstTotalDay** | Number | =昼間 | ✅ | **Formula:** `=SUM(SELECT(Requests[EstTime], AND([TargetDate] = [_THISROW].[TargetDate], [TimeSlot] = "昼間")))` |
 | **Related ChangeLogs** | List | ="変更履歴" | ✅ | **Formula:** `REF_ROWS("ChangeLogs", "RequestId")`<br>**Desc:** ChangeLogs entries that reference this entry in the RequestId column |
 | **Date_Instruction** | Show |  | ✅ | **Formula:** `=""` |
+| **Memo** | Text | =メモ | ✅ | **Formula:** `=IF(ISBLANK([GroupId].[Memo]), "　", [GroupId].[Memo])`<br>**Desc:** グループに紐づくメモを表示（空欄時もレイアウト崩れを防ぐため全角スペースを返す） |
 
 ---
 
@@ -52,7 +53,7 @@
 | **Reason** | Text | ="変更内容と理由" | - | - |
 | **ChangedBy** | Enum | ="変更者" | - | - |
 | **Timestamp** | DateTime | ="変更日時" | - | **Initial:** `NOW()` |
-| **NewTotalAmount** | Decimal | =新・総製造数 | ✅ | **Formula:** `=ROUND([NewLotCount] * [RequestId].[LotSize])` |
+| **NewTotalAmount** | Decimal | =新・総製造数 | ✅ | **Formula:** `=IF([RequestId].[UnitType]="kg", [NewLotCount] * [RequestId].[LotSize], ROUND([NewLotCount] * [RequestId].[LotSize]))` |
 | **TargetProductName** | Text | =”品名” | ✅ | **Formula:** `=[RequestId].[ProductName]` |
 | **TargetTaskName** | Text | =”作業名” | ✅ | **Formula:** `=[RequestId].[TaskName]` |
 | **Instance Id** | Text |  | - | - |

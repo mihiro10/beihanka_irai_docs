@@ -66,7 +66,7 @@ AppSheet上の主軸となるトランザクションテーブル。
 | ReturnReason | 差戻し理由 | LongText | `[_INPUT]` アクションで記録 |
 
 **Virtual Columns (Requests)**
-- `TotalAmount` = `ROUND([LotCount] * [LotSize])`
+- `TotalAmount` = `IF([UnitType]="kg", [LotCount] * [LotSize], ROUND([LotCount] * [LotSize]))`
 - `EstTime` = `IF([OverrideTime] > 0, [OverrideTime], ROUND([LotCount] * [ProductId].[RequiredTime]))`
 - `EstTotalMorning` = `SUM(SELECT(Requests[EstTime], AND([TargetDate] = [_THISROW].[TargetDate], [TimeSlot] = "早朝")))`
 - `EstTotalDay` = `SUM(SELECT(Requests[EstTime], AND([TargetDate] = [_THISROW].[TargetDate], [TimeSlot] = "昼間")))`
@@ -123,4 +123,4 @@ AppSheet上の主軸となるトランザクションテーブル。
 - [x] RequestGroups と Requests の親子連携の確立および、子フォーム ProductId の空振り問題修正
 - [x] 親フォームでのシフト事前確認 UI (DisplayTimeSlot) の実装
 - [x] SELECT 集計と重複排除スライス (DailyChartData) を組み合わせた「日別・時間帯別横並び比較グラフ(col series)」の構築
-- [x] 端数ロット（2/3など）入力時の「総製造数」「予想稼働時間」の小数表示を防止するため、ROUND関数による整数化を実装
+- [x] 端数ロット（2/3など）入力時の「総製造数」「予想稼働時間」の小数表示を防止するため、ROUND関数による整数化を実装（ただし、単位が `kg` の場合は小数を許容するよう数式を分離：`IF([UnitType]="kg", [LotCount]*[LotSize], ROUND([LotCount]*[LotSize]))`）
