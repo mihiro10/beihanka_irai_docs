@@ -73,7 +73,7 @@ AppSheet上の主軸となるトランザクションテーブル。
 - `TaskName` = `[ProductId].[TaskName]`
 - `ProductName` = `[ProductId].[ProductName]`
 - `CalendarLabel` = `IF([Status] = "米飯課予定", "🚧 " & [Reason], [TaskName] & " : " & [TotalAmount] & [UnitType] & " (" & [EstTime] & "分)")`
-- `ProdCalendarLabel` = `IF([Status] = "米飯課予定", "🚧 " & [Reason], [ProductName] & " - " & [TaskName] & " : " & [TotalAmount] & [UnitType])`
+- `ProdCalendarLabel` = `IF([Status] = "米飯課予定", "🚧 " & [Reason] & " (" & [EstTime] & "分)", [ProductName] & " - " & [TaskName] & " : " & [TotalAmount] & [UnitType] & " (" & [EstTime] & "分)")`
 - `StatusColor` = `SWITCH([Status], "依頼中", "Yellow", "確定", "Green", "差し戻し", "Red", "米飯課予定", "Purple", "Black")`
 
 **Slices (Requests)**

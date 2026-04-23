@@ -31,7 +31,7 @@
 | **StatusColor** | Color |  | ✅ | **Formula:** `=SWITCH([Status], "依頼中", "Yellow", "確定", "Green", "差し戻し", "Red", "米飯課予定", "Purple", "Gray")` |
 | **EstTimeMorning** | Number | =早朝稼働時間 | ✅ | **Formula:** `=IF([TimeSlot] = "早朝", [EstTime], 0)` |
 | **EstTimeDay** | Number | =昼間稼働時間 | ✅ | **Formula:** `=IF([TimeSlot] = "昼間", [EstTime], 0)` |
-| **ProdCalendarLabel** | Text |  | ✅ | **Formula:** `=IF(` |
+| **ProdCalendarLabel** | Text | =統合ダッシュボード用 | ✅ | **Formula:** `=IF([Status] = "米飯課予定", "🚧 " & [Reason] & " (" & [EstTime] & "分)", [ProductName] & " - " & [TaskName] & " : " & [TotalAmount] & [UnitType] & " (" & [EstTime] & "分)")` |
 | **DateAndSlot** | Text |  | ✅ | **Formula:** `=TEXT([TargetDate], "M/D") & " " & [Timeslot]` |
 | **EstTotalMorning** | Number | =早朝 | ✅ | **Formula:** `=SUM(SELECT(Requests[EstTime], AND([TargetDate] = [_THISROW].[TargetDate], [TimeSlot] = "早朝")))` |
 | **EstTotalDay** | Number | =昼間 | ✅ | **Formula:** `=SUM(SELECT(Requests[EstTime], AND([TargetDate] = [_THISROW].[TargetDate], [TimeSlot] = "昼間")))` |
@@ -119,10 +119,10 @@
 
 | スライス名 | ソーステーブル | フィルター条件 (Row Filter) | 備考 (Context / Business Logic) |
 | :--- | :--- | :--- | :--- |
-| **Tasks_To_Approve** | Requests | `=AND([TargetDate] >= TODAY(), OR([TargetDate] < TODAY() + 4, AND([TargetDate] = TODAY() + 4, TIME(NOW()) >= "12:00:00")))` | **【中核ロジック】** 「4日前正午ルール」の根幹。製造日に対して今日から4日前の正午以降（かつ過去でない）依頼だけを抽出し、米飯課の承認待ちボードに送るための最重要スライス。 |
+| **Tasks_To_Approve** | Requests | `=AND([TargetDate] >= TODAY(), OR([TargetDate] < TODAY() + 4, AND([TargetDate] = TODAY() + 4, TIME(NOW()) >= "11:00:00")))` | **【中核ロジック】** 「4日前午前11時ルール」の根幹。製造日に対して今日から4日前の午前11時以降（かつ過去でない）依頼だけを抽出し、米飯課の承認待ちボードに送るための最重要スライス。 |
 | **Requests_早朝** | Requests | `=[TimeSlot] = "早朝"` | カレンダーやグラフで「早朝」の案件だけを表示するための基礎フィルター。 |
 | **Requests_昼間** | Requests | `=[TimeSlot] = "昼間"` | カレンダーやグラフで「昼間」の案件だけを表示するための基礎フィルター。 |
-| **Tasks_To_Approve_昼間** | Requests | `=AND([TimeSlot] = "昼間", [TargetDate] >= TODAY(), OR([TargetDate] < TODAY() + 4, AND([TargetDate] = TODAY() + 4, TIME(NOW()) >= "12:00:00")))` | 4日前の正午以降の承認待ちデータをさらに「昼間」のみに絞ったもの。 |
-| **Tasks_To_Approve_早朝** | Requests | `=AND([TimeSlot] = "早朝", [TargetDate] >= TODAY(), OR([TargetDate] < TODAY() + 4, AND([TargetDate] = TODAY() + 4, TIME(NOW()) >= "12:00:00")))` | 4日前の正午以降の承認待ちデータをさらに「早朝」のみに絞ったもの。 |
+| **Tasks_To_Approve_昼間** | Requests | `=AND([TimeSlot] = "昼間", [TargetDate] >= TODAY(), OR([TargetDate] < TODAY() + 4, AND([TargetDate] = TODAY() + 4, TIME(NOW()) >= "11:00:00")))` | 4日前の午前11時以降の承認待ちデータをさらに「昼間」のみに絞ったもの。 |
+| **Tasks_To_Approve_早朝** | Requests | `=AND([TimeSlot] = "早朝", [TargetDate] >= TODAY(), OR([TargetDate] < TODAY() + 4, AND([TargetDate] = TODAY() + 4, TIME(NOW()) >= "11:00:00")))` | 4日前の午前11時以降の承認待ちデータをさらに「早朝」のみに絞ったもの。 |
 | **DailyChartData** | Requests | `=AND(` | 日別の稼働グラフで棒グラフの基底となるデータを揃えるためのスライス。 |
 | **米飯課フォーム用データ** | Requests | `=True` | 米飯課が180分の予定ブロックを行うフォーム用の専用スライス。 |

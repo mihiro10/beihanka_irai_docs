@@ -57,14 +57,14 @@
 ## ⚡ Actions (ボタン・振る舞い)
 | アクション名 | 対象テーブル | 実行内容 (Do This) | 実行条件 (Condition) | 備考 (Context / Business Logic) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Delete** | Requests | DELETE_RECORD | `=AND(` | 条件に注目。**「すでに確定している」または「4日前の正午以降に入っている」場合は削除アイコンが消滅し、押せなくなるガード**が実装されている。 |
+| **Delete** | Requests | DELETE_RECORD | `=AND(` | 条件に注目。**「すでに確定している」または「4日前の午前11時以降に入っている」場合は削除アイコンが消滅し、押せなくなるガード**が実装されているが、`[Status] = "米飯課予定"` のレコードは例外としていつでも削除可能とする。 |
 | **Add** | Requests | ADD_RECORD | `=CONTEXT("ViewType") = "Form"` | - |
 | **View Ref (GroupId)** | Requests | NAVIGATE_APP | `NOT(ISBLANK([GroupId]))` | - |
 | **Edit** | Products | EDIT_RECORD | `-` | - |
 | **Compose Email (Email)** | Users | EMAIL | `NOT(ISBLANK([Email]))` | - |
 | **View Ref (ProductId)** | RequestGroups | NAVIGATE_APP | `NOT(ISBLANK([ProductId]))` | - |
 | **View Ref (Approver)** | Requests | NAVIGATE_APP | `NOT(ISBLANK([Approver]))` | - |
-| **Approve** | Requests | SET_COLUMN_VALUE | `=AND([Status] = "依頼中", OR([TargetDate] < TODAY() + 4, AND([TargetDate] = TODAY() + 4, TIME(NOW()) >= "12:00:00")))` | **米飯課の確定ボタン:** 4日前の正午以降に入ってきた案件のみを「確定」ステータスに変化させるアクション。Deckビューのスワイプに紐付いている。 |
+| **Approve** | Requests | SET_COLUMN_VALUE | `=AND([Status] = "依頼中", OR([TargetDate] < TODAY() + 4, AND([TargetDate] = TODAY() + 4, TIME(NOW()) >= "11:00:00")))` | **米飯課の確定ボタン:** 4日前の午前11時以降に入ってきた案件のみを「確定」ステータスに変化させるアクション。Deckビューのスワイプに紐付いている。 |
 | **差し戻し** | Requests | SET_COLUMN_VALUE | `=FALSE` | - |
 | **Chart Data for 昼間稼働グラフ** | Requests | NAVIGATE_APP | `=CONTEXT("View") = "昼間稼働グラフ"` | - |
 | **Chart Data for 早朝稼働グラフ** | Requests | NAVIGATE_APP | `=CONTEXT("View") = "早朝稼働グラフ"` | - |
